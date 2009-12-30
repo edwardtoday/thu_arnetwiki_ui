@@ -1,0 +1,28 @@
+﻿css组接口说明：
+
+1. 每个页面需在head标签内包含如下css和js脚本：
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="interface.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+	
+2. 在 topbar 和 wiki-content 层之间需增加一导航层：<div id="navegation">
+
+3. wiki-content层需要添加样式属性'groupWrapper'：<div id='wiki-content'class="groupWrapper">
+
+4. 各个模块所在div层格式：
+   每个模块为一div层，每个模块内包含两个div层： 
+   <div class="itemHeader"> ：显示模块标题  
+   <div class="itemContent">：显示模块内容 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+---------------------------------
+	 
+若有其他需注意的我会及时更新...
+
+2009.12.30 --kk
