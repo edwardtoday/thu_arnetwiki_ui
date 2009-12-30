@@ -9,14 +9,14 @@
 </head>
 
 <body>
-  	<div id="outerframe" style="padding:15px;width:600px;">
-	    <div id="mainframe" style="padding:15px;border:1px solid;width:600px;">
-	    	<div id="topbar" align="right"><a href="signin.jsp">Sign In</a></div>
-	    	<div id="mainlogo" style="border:1px solid;width:200px;height:80px"> here is logo</div>
-		<div class="wiki-id" style="display:none ">
+  	<div id="outerframe">
+	    <div id="mainframe">
+	    	<div id="topbar"><a href="signin.jsp">Sign In</a></div>
+	    	<div id="mainlogo"> here is logo</div>
+		<div id="wiki-id">
 			<%String id = request.getParameter("wiki-id"); %>
 		</div>
-		<div class="wiki-type" style="display:none ">  
+		<div id="wiki-type">  
 			<% String style = request.getParameter("style"); int type; %>
 		</div>
 		<%
@@ -36,7 +36,7 @@
 			}
 		%>
 	</div>
-	    <div id="bottom" align="center">
+	    <div id="bottom">
 	    	(c) ArnetWiki  <a href="">About</a> <a href="">Contact</a> <a href="">Help</a>
 	    </div>
 </div>

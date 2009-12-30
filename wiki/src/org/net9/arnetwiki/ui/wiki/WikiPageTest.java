@@ -42,33 +42,33 @@ public class WikiPageTest {
 	public String getTermPage()
 	{
 		return "You are viewing term:" + getID() + 
-				"<br>keyword =" + "testKeyword" +
-				"<br>definition=" + "testDefinition" +
-				"<br>conferences=" + "testConferences" +
-				"<br>papers=" + "testPapers" +
-				"<br>people=" + "testPeoples" +
-				"<br>institutions=" + "testInstitutions" +
-				"<br>dataset=" + "testDataset";
+				"<br><div id = \"keyword\">keyword =" + "testKeyword" +
+				"</div><div id = \"definition\"> definition=" + "testDefinition" +
+				"</div><div id = \"conferences\">conferences=" + "testConferences" +
+				"</div><div id = \"papers\">papers=" + "testPapers" +
+				"</div><div id = \"people\">people=" + "testPeoples" +
+				"</div><div id = \"institutions\">institutions=" + "testInstitutions" +
+				"</div><div id = \"dataset\">dataset=" + "testDataset</div>";
 	}
 	public String getPeoplePage()
 	{
 		return "You are viewing people:" + getID() + 
-				"<br>keyword =" + "testKeyword" +
-				"<br>name=" + "testName" +
-				"<br>position=" + "testPosition" +
-				"<br>affliation=" + "testAffliation" +
-				"<br>address=" + "testAddress" +
-				"<br>email=" + "testEmail" +
-				"<br>home-page=" + "testHome-page" +
-				"<br>paperlist=" + "testPaperlist";
+				"<br><div id = keyword>keyword =" + "testKeyword" +
+				"</div><div id = name>name=" + "testName" +
+				"</div><div id = position>position=" + "testPosition" +
+				"</div><div id = affliation>affliation=" + "testAffliation" +
+				"</div><div id = address>address=" + "testAddress" +
+				"</div><div id = email>email=" + "testEmail" +
+				"</div><div id = home-page>home-page=" + "testHome-page" +
+				"</div><div id = paperlist>paperlist=" + "testPaperlist</div>";
 	}
 	public String getInstitutionPage()
 	{
 		return "You are viewing institution:" + getID() + 
-				"<br>keyword =" + "testKeyword" +
-				"<br>location=" + "testLocation" +
-				"<br>peoplelist=" + "testPeoplelist" +
-				"<br>paperlist=" + "testPaperlist";
+				"<br><div id = keyword>keyword =" + "testKeyword" +
+				"</div><div id = location>location=" + "testLocation" +
+				"</div><div id = peoplelist>peoplelist=" + "testPeoplelist" +
+				"</div><div id = paperlist>paperlist=" + "testPaperlist</div>";
 	}
 
 

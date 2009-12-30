@@ -7,18 +7,19 @@
 <title>result-list</title>
 </head>
   <body>
-  	<div id="outerframe" style="padding:15px;width:600px;height:300px">
-	    <div id="mainframe" style="padding:15px;border:1px solid;width:600px;height:300px">
-	    	<div id="topbar" align="right"><a href="signin.jsp">Sign In</a></div>
-	    	<div id="mainlogo" style="border:1px solid;width:200px;height:80px"> here is logo</div>
+  	<div id="outerframe">
+	    <div id="mainframe">
+	    	<div id="topbar"><a href="signin.jsp">Sign In</a></div>
+	    	<div id="mainlogo"> here is logo</div>
 	    	<br/>
-	    	<div id="query" align="left">
+	    	<div id="query">
 				<form method="post" action="result-list.jsp" name="searchform">
-					<input type="text" name="querytext" style="width:350px"/>
+					<input type="text" name="querytext"/>
 					<input type="submit" value="Search!" >
 				</form>
 	    	</div>  
 	    	<br/>
+			<div id="result-list">
 			<% 
 				String querytext = request.getParameter("querytext");
 				if (querytext == null || querytext.isEmpty())
@@ -30,10 +31,10 @@
 					out.println(tester.show());
 				}
 			%>
+			</div>
 	    </div>
-	    <div id="bottom" align="right">
-	    	<div align="center">(c) ArnetWiki  <a href="">About</a> <a href="">Contact</a> <a href="">Help</a>
-	        </div>
+	    <div id="bottom">
+	    	(c) ArnetWiki  <a href="">About</a> <a href="">Contact</a> <a href="">Help</a>
 	    </div>
     </div>
   </body>

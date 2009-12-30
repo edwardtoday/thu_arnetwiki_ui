@@ -27,29 +27,46 @@ public class WikiEditTest{
 	{
 		return Integer.parseInt(request.getParameter("style"));
 	}
-	public Boolean savePage()
+	public String getEditPage()
 	{
 		switch(getType())
 		{
 			case 1:		//term
-				return saveTermPage();
+				return editTermPage();
 			case 2:		//people
-				return savePeoplePage();
+				return editPeoplePage();
 			default:	//institution
-				return saveInstitutionPage();
+				return editInstitutionPage();
 		}
 	}
-	public Boolean saveTermPage()
+	public String editTermPage()
 	{
-		return true;
+		return "<div id=\"keyword\"><textarea name=\"keyword\">keyword</textarea><br></div>" +
+			"<div id=\"definition\"><textarea name=\"definition\">definition</textarea><br></div>" +
+			"<div id=\"conferences\"><textarea name=\"conferences\">conferences</textarea><br></div>" + 
+			"<div id=\"papers\"><textarea name=\"papers\">papers</textarea><br></div>" +
+			"<div id=\"people\"><textarea name=\"people\">people</textarea><br></div>" +
+			"<div id=\"institutions\"><textarea name=\"institutions\">institutions</textarea><br></div>" +
+			"<div id=\"dataset\"><textarea name=\"dataset\">dataset</textarea><br></div>";
 	}
-	public Boolean savePeoplePage()
+	public String editPeoplePage()
 	{
-		return true;
+		return "<div id=\"keyword\"><textarea name=\"keyword\">keyword</textarea><br></div>" + 
+			"<div id=\"name\"><textarea name=\"name\">name</textarea><br></div>" +
+			"<div id=\"position\"><textarea name=\"position\">position</textarea><br></div>" +
+			"<div id=\"affliation\"><textarea name=\"affliation\">affliation</textarea><br></div>" +
+			"<div id=\"address\"><textarea name=\"address\">address</textarea><br></div>" +
+			"<div id=\"email\"><textarea name=\"email\">email</textarea><br></div>" +
+			"<div id=\"home-page\"><textarea name=\"home-page\">home-page</textarea><br></div>" +
+			"<div id=\"paperlist\"><textarea name=\"paperlist\">paperlist</textarea><br></div>";
 	}
-	public Boolean saveInstitutionPage()
+	public String editInstitutionPage()
 	{
-		return true;
+		return "<div id=\"keyword\"><textarea name=\"keyword\">keyword</textarea><br></div>" +
+			"<div id=\"location\"><textarea name=\"location\">location</textarea><br></div>" +
+			"<div id=\"peoplelist\"><textarea name=\"peoplelist\">peoplelist</textarea><br></div>" +
+			"<div id=\"paperlist\"><textarea name=\"paperlist\">paperlist</textarea><br></div>" +
+			"<div id=\"homepage\"><textarea name=\"homepage\">homepage</textarea><br></div>";
 	}
 
 
