@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
-<%@page import="org.net9.arnetwiki.user.UserWebController"%>
+<%@page import="org.net9.arnetwiki.ui.um.UserWebController"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -37,7 +37,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<hr/>
 	    	<div id="myfavorite" style="float:left;width:270px;border:1px solid;padding-left:10px">
 	    		<table id="myfavoritetable">
-	    			
+	    			<tr>
+	    				<td>Welcome1</td>
+	    				<td><input type="button" value="I want to delete it!!"/></td>
+	    			</tr>
+	    			<tr>
+	    				<td>Welcome2</td>
+	    				<td><input type="button" value="I want to delete it!!"/></td>
+	    			</tr>
+	    			<tr>
+	    				<td>Welcome3</td>
+	    				<td><input type="button" value="I want to delete it!!"/></td>
+	    			</tr>
 	    		</table>
 	    	</div>
 	    	<div id="searchfavorite" style="float:right;width:270px;padding-right:10px">

@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@page import="org.net9.arnetwiki.ui.um.UserWebController"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -19,14 +20,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
   </head>
-  
+  <script type="text/javascript" src="fordebug.js"></script>
   <body>
   	<br/>
   	<br/>
   	<br/>
   	<div id="outerframe" style="margin:auto;padding:15px;width:600px;height:300px">
 	    <div id="mainframe" style="margin:auto;padding:15px;border:1px solid;width:600px;height:300px">
-	    	<div id="topbar" align="right"><a href="signin.jsp">Sign In</a></div>
+	    	<%
+				request.setCharacterEncoding("UTF-8");
+				UserWebController controller = new UserWebController(request);  	
+
+			%>
+	    	<div id="topbar" align="right">
+	    	<%	if(true) {%>
+	    		<a href="signin.jsp">Sign In</a>
+	    		<%} else { %>
+	    		<a href="favorite.jsp">Favorite</a>|<a href="group.jsp">Group</a>|<a href="setting.jsp">Setting</a>|<a href="logout.jsp">Sign Out</a>
+	    		<%} %>
+	    	</div>
 	    	<div id="mainlogo" style="border:1px solid;width:200px;height:80px"> here is logo</div>
 	    	<br/>
 	    	<div id="query" align="left">

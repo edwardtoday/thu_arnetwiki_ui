@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="org.net9.arnetwiki.user.UserWebController"%>
-<%@page import="org.net9.arnetwiki.user.exception.LoginFailedException"%>
+<%@page import="org.net9.arnetwiki.ui.um.UserWebController"%>
+<%@page import="org.net9.arnetwiki.ui.um.exception.LoginFailedException"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -24,6 +24,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	-->
 
   </head>
+  
+  <script type="text/javascript" src="fordebug.js"></script>
   
   <body>
     <br/>
@@ -53,12 +55,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   					} else if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
   				 %>
 	    			<p>Please log in to continue:</p>
-	    		<form id="loginform" action="">
-	    			<div id="username" style="padding-left:10px;">Username : <input id="usernametext"/></div>
-	    			<div id="password" style="padding-left:10px;">Password : <input id="passwordtext" type="password"/></div>
+	    		<form name="loginform" method="post" action="">
+	    			<div name="username" style="padding-left:10px;">Username : 
+	    				<input name="usernametext" type="text" /></div>
+	    			<div name="password" style="padding-left:10px;">Password : 
+	    				<input name="passwordtext" type="password"/></div>
 	    			<!-- <input id="rememberlogin" type="checkbox">remember the state<br> -->
-	    			<input id="loginsubmit" type="submit" value="login"/><!--<a href="">forget the password?</a>-->
+	    			<input id="loginsubmit" type="submit" value="login" onclick="validateLogin()"/><!--<a href="">forget the password?</a>-->
 	    		</form>
+	    		<script language="javascript">
+				     function validateLogin()
+				     {
+				      	var sUserName = document.loginform.usernametext.value;
+				      	var sPassword = document.loginform.passwordtext.value;
+				      	if( sUserName=="" )
+				      	{
+				       		alert("Please input the username!");
+				       		return false;
+				      	}
+				      	else if( sPassword=="" )
+				      	{
+				       		alert("Please input the password!");
+				       		return false;
+				      	}
+				      	else{
+				      		document.loginform.action="newindex.jsp"; 
+				      		document.loginform.Submit(); 
+				      	}
+				     }
+				 </script>
 	    		<%
 	    			}else {
 						try {

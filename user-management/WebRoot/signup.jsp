@@ -38,15 +38,59 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				String email = request.getParameter("email");
 				
 	    	 %>
-	    	<form id="signupform" action="">
+	    	<form name="signupform" action="" method="post">
 	    		<div>Welcome to ArnetWiki!</div>
-	    		<div>Username : <input id="username" /></div>
-	    		<div>Nickname : <input id="nickname" /></div>
-	    		<div>Password : <input id="password" type="password" /></div>
-	    		<div>Retype Password : <input id="repassword" type="password" /></div>
-	    		<div>Email : <input id="email"/></div>
-	    		<input id="signupsubmit" type="submit" value="Sign Up!!">
+	    		<div>Username : <input name="username" type="text" /></div>
+	    		<div>Nickname : <input name="nickname" type="text" /></div>
+	    		<div>Password : <input name="password" type="password" /></div>
+	    		<div>Retype Password : <input name="repassword" type="password" /></div>
+	    		<div>Email : <input name="email" type="text" /></div>
+	    		<input id="signupsubmit" type="submit" value="Sign Up!!" onclick="validateLogin()">
 	    	</form>
+	    	<script language="javascript">
+				     function validateLogin()
+				     {
+				      	var sUserName = document.signupform.username.value;
+				      	var sNickName = document.signupform.nickname.value;
+				      	var sPassword = document.signupform.password.value;
+				      	var sRePassword = document.signupform.repassword.value;
+				      	var sEmail = document.signupform.email.value;
+				      	if( sUserName=="" )
+				      	{
+				       		alert("Please input the username!");
+				       		return false;
+				      	}
+				      	else if( sNickName=="" )
+				      	{
+				       		alert("Please input the nickname!");
+				       		return false;
+				      	}
+				      	else if( sPassword=="" )
+				      	{
+				       		alert("Please input the password!");
+				       		return false;
+				      	}
+				      	else if( sRePassword=="" )
+				      	{
+				       		alert("Please input the password again!");
+				       		return false;
+				      	}
+				      	else if( sEmail=="" )
+				      	{
+				       		alert("Please input the email!");
+				       		return false;
+				      	}
+				      	else if(sPassword != sRePassword)
+				      	{
+				      		alert("Please check the password!");
+				       		return false;
+				      	}
+				      	else{
+				      		document.signupform.action="newindex.jsp"; 
+				      		document.signupform.Submit(); 
+				      	}
+				     }
+				 </script>
 	    </div>
 	    <div id="bottom" align="right">
 	    	(c) ArnetWiki  <a href="">About</a> <a href="">Contact</a> <a href="">Help</a>

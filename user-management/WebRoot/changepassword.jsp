@@ -26,7 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <br/>
   	<div id="outerframe" style="margin:auto;padding:15px;width:600px;height:300px">
 	    <div id="mainframe" style="margin:auto;padding:15px;border:1px solid;width:600px;height:300px">
-	    	<div id="topbar" align="right"><a href="newindex.jsp">Home Page</a>|<a href="setting.jsp">Setting</a></div>
+	    	<div id="topbar" align="right"><a href="index.jsp">Home Page</a>|<a href="setting.jsp">Setting</a></div>
 	    	<div id="mainlogo" style="border:1px solid;width:200px;height:80px"> here is logo</div>
 	    	<hr/>
 	    	<form id="signupform" action="">
