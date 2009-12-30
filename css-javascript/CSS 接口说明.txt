@@ -16,7 +16,7 @@
    <div class="itemContent">：显示模块内容 
 	 
 	 
-	 
+具体使用样例大家可以看wiki-demo-2.0里的wiki-1.html 
 	 
 	 
 	 
