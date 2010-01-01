@@ -11,7 +11,7 @@
 3. wiki-content层需要添加样式属性'groupWrapper'：<div id='wiki-content'class="groupWrapper">
 
 4. 各个模块所在div层格式：
-   每个模块为一div层，每个模块内包含两个div层： 
+   每个模块为一div层，含有 class="groupItem"。每个模块内包含两个div层： 
    <div class="itemHeader"> ：显示模块标题  
    <div class="itemContent">：显示模块内容 
 	 
