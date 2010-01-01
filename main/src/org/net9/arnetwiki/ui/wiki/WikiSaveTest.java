@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
  * 
  */
 
-public class WikiSaveTest{
+public class WikiSaveTest{ 
 	private HttpServletRequest request;
 	
 	public WikiSaveTest (HttpServletRequest request) {
