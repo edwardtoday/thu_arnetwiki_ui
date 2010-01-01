@@ -3,14 +3,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-<title>result-list</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	<title>result-list</title>
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="interface.js"></script>
+	<script type="text/javascript" src="main.js"></script>
 </head>
   <body>
   	<div id="outerframe">
 	    <div id="mainframe">
 	    	<div id="topbar"><a href="signin.jsp">Sign In</a></div>
-	    	<div id="mainlogo"> here is logo</div>
+	    	<div id="mainlogo" >
+	    		<img width="135" height="135" alt="logo" src="Wiki3.png"/>
+			</div>
 	    	<br/>
 	    	<div id="query">
 				<form method="post" action="result-list.jsp" name="searchform">

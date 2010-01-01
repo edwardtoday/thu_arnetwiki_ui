@@ -16,9 +16,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="interface.js"></script>
+	<script type="text/javascript" src="main.js"></script>
 
   </head>
   
@@ -27,7 +28,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<div id="outerframe" >
 	    <div id="mainframe">
 	    	<div id="topbar" align="right"><a href="index.jsp">Home Page</a>|<a href="signin.jsp">Sign In</a></div>
-	    	<div id="mainlogo"> here is logo</div>
+	    	<div id="mainlogo" >
+	    		<img width="135" height="135" alt="logo" src="Wiki3.png"/>
+			</div>
 	    	<hr/>
 	    	<%
 	    		request.setCharacterEncoding("UTF-8");

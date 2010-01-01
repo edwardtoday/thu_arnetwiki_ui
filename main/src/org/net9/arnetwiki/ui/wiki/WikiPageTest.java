@@ -39,36 +39,52 @@ public class WikiPageTest {
 				return getInstitutionPage();
 		}
 	}
+	private String generateWikiItem(String header, String content){
+		return
+			"<div id = '" + header + "' class='groupItem'>" + 
+				"<div class='itemHeader'>" +
+					header +
+					"<a href='#' class='closeEl'>[-]</a>" +
+				"</div>" +
+				"<div class='itemContent'>" + 
+					content +
+				"</div>" +
+			"</div>";
+	}
 	public String getTermPage()
 	{
 		return "You are viewing term:" + getID() + 
-				"<br><div id = \"keyword\">keyword =" + "testKeyword" +
-				"</div><div id = \"definition\"> definition=" + "testDefinition" +
-				"</div><div id = \"conferences\">conferences=" + "testConferences" +
-				"</div><div id = \"papers\">papers=" + "testPapers" +
-				"</div><div id = \"people\">people=" + "testPeoples" +
-				"</div><div id = \"institutions\">institutions=" + "testInstitutions" +
-				"</div><div id = \"dataset\">dataset=" + "testDataset</div>";
+			"<br>" +
+			generateWikiItem("keyword", "test keyword") +
+			generateWikiItem("definition", "test definition") +
+			generateWikiItem("conferences", "test conferences") +
+			generateWikiItem("papers", "test papers") +
+			generateWikiItem("people", "test people") +
+			generateWikiItem("institutions", "test institutions") +
+			generateWikiItem("dataset", "test dataset");
 	}
 	public String getPeoplePage()
 	{
 		return "You are viewing people:" + getID() + 
-				"<br><div id = keyword>keyword =" + "testKeyword" +
-				"</div><div id = name>name=" + "testName" +
-				"</div><div id = position>position=" + "testPosition" +
-				"</div><div id = affliation>affliation=" + "testAffliation" +
-				"</div><div id = address>address=" + "testAddress" +
-				"</div><div id = email>email=" + "testEmail" +
-				"</div><div id = home-page>home-page=" + "testHome-page" +
-				"</div><div id = paperlist>paperlist=" + "testPaperlist</div>";
+			"<br>" +
+			generateWikiItem("keyword", "test keyword") +
+			generateWikiItem("name", "test name") +
+			generateWikiItem("position", "test position") +
+			generateWikiItem("affliation", "test affliation") +
+			generateWikiItem("address", "test address") +
+			generateWikiItem("email", "test email") +
+			generateWikiItem("home-page", "test home-page") +
+			generateWikiItem("paperlist", "test paperlist");
 	}
 	public String getInstitutionPage()
 	{
 		return "You are viewing institution:" + getID() + 
-				"<br><div id = keyword>keyword =" + "testKeyword" +
-				"</div><div id = location>location=" + "testLocation" +
-				"</div><div id = peoplelist>peoplelist=" + "testPeoplelist" +
-				"</div><div id = paperlist>paperlist=" + "testPaperlist</div>";
+			"<br>" +
+			generateWikiItem("keyword", "test keyword") +
+			generateWikiItem("location", "test location") +
+			generateWikiItem("peoplelist", "test peoplelist") +
+			generateWikiItem("paperlist", "test paperlist") +
+			generateWikiItem("homepage", "test homepage");			
 	}
 
 

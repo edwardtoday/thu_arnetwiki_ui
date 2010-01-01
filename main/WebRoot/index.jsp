@@ -16,9 +16,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="interface.js"></script>
+	<script type="text/javascript" src="main.js"></script>
   </head>
   <script type="text/javascript" src="fordebug.js"></script>
   <body>
@@ -32,26 +33,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				UserWebController controller = new UserWebController(request);  	
 
 			%>
-	    	<div id="topbar" align="right">
+	    	<div id="topbar">
 	    	<%	if(true) {%>
 	    		<a href="signin.jsp">Sign In</a>
 	    		<%} else { %>
 	    		<a href="favorite.jsp">Favorite</a>|<a href="group.jsp">Group</a>|<a href="setting.jsp">Setting</a>|<a href="logout.jsp">Sign Out</a>
 	    		<%} %>
 	    	</div>
-	    	<div id="mainlogo" > here is logo</div>
+	    	<div id="mainlogo" >
+	    		<img width="135" height="135" alt="logo" src="Wiki3.png"/>
+			</div>
 	    	<br/>
-	    	<div id="query" align="left">
-	    		<input id="querytext" />
-	    		<input id="searchbutton" type="submit" value="Search!"/>
-	    		<!--<input id="signup" type="submit" value="Sign Up Now!!"/>-->
+	    	<div id="query">
+				<form method="post" action="result-list.jsp" name="searchform">
+					<input id="querytext" type="text" name="querytext"/>
+					<input id="searchbutton" type="submit" value="Search!" >
+				</form>
 	    	</div>  
 	    	<br/>
 	    	<div id="trythis">Try This</div>
 	    	<hr/>
 	    	<div class="searchsamples"><a href="">SOA</a> <a href="">IR</a> </div>
 	    </div>
-	    <div id="bottom" align="right">
+	    <div id="bottom">
 	    	(c) ArnetWiki  <a href="">About</a> <a href="">Contact</a> <a href="">Help</a>
 	    </div>
     </div>
