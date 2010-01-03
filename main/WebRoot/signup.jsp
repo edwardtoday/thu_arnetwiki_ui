@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@page import="org.net9.arnetwiki.ui.um.UserWebController"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -35,16 +36,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<%
 	    		request.setCharacterEncoding("UTF-8");
 				String username = request.getParameter("username");
-				String nickname = request.getParameter("nickname");
 				String password = request.getParameter("password");
 				String repassword = request.getParameter("repassword");
 				String email = request.getParameter("email");
-				
+				UserWebController controller = new UserWebController(request);
+				if(username == null || password == null || email == null || repassword == null || !password.equals(repassword)) {
 	    	 %>
 	    	<form name="signupform" action="" method="post">
 	    		<div>Welcome to ArnetWiki!</div>
 	    		<div>Username : <input name="username" type="text" /></div>
-	    		<div>Nickname : <input name="nickname" type="text" /></div>
 	    		<div>Password : <input name="password" type="password" /></div>
 	    		<div>Retype Password : <input name="repassword" type="password" /></div>
 	    		<div>Email : <input name="email" type="text" /></div>
@@ -61,11 +61,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				      	if( sUserName=="" )
 				      	{
 				       		alert("Please input the username!");
-				       		return false;
-				      	}
-				      	else if( sNickName=="" )
-				      	{
-				       		alert("Please input the nickname!");
 				       		return false;
 				      	}
 				      	else if( sPassword=="" )
@@ -95,6 +90,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				     }
 				 </script>
 	    </div>
+	    <% } else {
+	    	
+	    }
+	     %>
 	    <div id="bottom" align="right">
 	    	(c) ArnetWiki  <a href="">About</a> <a href="">Contact</a> <a href="">Help</a>
 	    </div>
