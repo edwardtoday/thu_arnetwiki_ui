@@ -7,6 +7,7 @@ import org.net9.arnetwiki.ui.um.exception.BackendConnectionException;
 import org.net9.arnetwiki.ui.um.exception.GenericException;
 import org.net9.arnetwiki.ui.um.exception.LoginFailedException;
 import org.net9.arnetwiki.ui.um.exception.LoginRequiredException;
+import org.net9.arnetwiki.ui.um.exception.SignupFailedException;
 
 /*
  * @author huww06
@@ -35,6 +36,13 @@ public class UserWebController {
 			Backend ses = new Backend(username, password);
 			ses.auth();
 			getHttpSession().setAttribute(SESSION_KEY, ses);
+		}
+	}
+	
+	public void signup(String username, String password, String email)
+	throws GenericException, SignupFailedException {
+		if(!isLogged()) {
+			Backend ses = new Backend(username, password);
 		}
 	}
 	
