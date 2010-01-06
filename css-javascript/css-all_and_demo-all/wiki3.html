@@ -1,0 +1,93 @@
+ <html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="index.css">
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="interface.js"></script>
+		<script type="text/javascript" src="main.js"></script>
+	</head>
+	 <body>
+		 <div id='outerframe'>
+			 <div id='mainframe'>
+				<!-- mainlogo ---------------------------------------------------------------------->
+				<div id="mainlogo">
+					<img width="135" height="135" alt="logo" src="logo2.png"/>
+				</div>
+				
+				<!-- topbar ------------------------------------------------------------------------>
+				 <div id="topbar">
+					<p>
+						<a href="" id='login'>Login</a>&nbsp/
+						<a href="" id='signup'>Sign up</a>
+					</p>
+				</div>
+				
+				<!-- navegation new add! ----------------------------------------------------------->
+				<div id="navegation"><ul lang="en" xml:lang="en">
+					<li><a href="">Term</a></li>
+					<li><a href="">People</a></li>
+					<li class="selected"><a href="">Institution</a></li>
+				</ul></div>
+				
+				
+				
+				<!-- wiki-content 需要添加样式: class='groupWrapper' ------------------------------->
+				 <div id='wiki-content'class="groupWrapper">
+					
+					 <div id='wiki-id' style="display:none">
+						<!-- wiki-id:invisible -->
+					 </div>
+					 <div id='wiki-type' style="display:none">
+						 <!-- wiki-type:invisible -->
+					 </div>
+					 
+					 <!-------------------------- --------------------------------------------------
+					 各个模块所在div层格式：
+					 每个模块为一div层，每个模块内包含两个div层： 
+					  <div class="itemHeader"> ：显示模块标题  
+					  <div class="itemContent">：显示模块内容 
+					------------------------------------------------------------------------------->
+					 
+					<!-- keyword ---------------------------------------------------------------->
+					<div id="keyword" class="groupItem" style="width:200px;">
+						<div class="itemHeader">Keyword</div>
+						<div class="itemContent">
+							content
+						</div>
+					</div>
+					
+					<!-- location ---------------------------------------------------------------->
+					<div id="location" class="groupItem">
+						<div class="itemHeader">Location<a href="#" class="closeEl">[-]</a></div>
+						<div class="itemContent">
+							content
+						</div>
+					</div>
+					<!-- peoplelist -------------------------------------------------------------->
+					<div id="peoplelist" class="groupItem">
+						<div class="itemHeader">Peoplelist<a href="#" class="closeEl">[-]</a></div>
+						<div class="itemContent">
+							content
+						</div>
+					</div>
+					<!-- paperlist ------------------------------------------------------------------->
+					<div id="paperlist" class="groupItem">
+						<div class="itemHeader">Paperlist<a href="#" class="closeEl">[-]</a></div>
+						<div class="itemContent">
+							content
+						</div>
+					</div>
+					<!-- homepage ------------------------------------------------------------------->
+					<div id="homepage" class="groupItem">
+						<div class="itemHeader">Homepage<a href="#" class="closeEl">[-]</a></div>
+						<div class="itemContent">
+							content
+						</div>
+					</div>
+				 </div>
+			 </div>
+		 </div>
+		 <div id='bottom'>
+			 bottom
+		 </div>
+	 </body>
+ </html>
