@@ -5,6 +5,8 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
     <base href="<%=basePath%>">
@@ -20,28 +22,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript" src="interface.js"></script>
 	<script type="text/javascript" src="main.js"></script>
-	<script type="text/javascript" src="getXmlHttp.js"></script>
+
   </head>
   
   <body>
   	<%
   		request.setCharacterEncoding("UTF-8");
   	 %>
+    <br/>
   	<div id="outerframe" >
 	    <div id="mainframe" >
-	    	<div id="topbar">
-	    	<%	
-	    		String username = (String)session.getAttribute("username");
-	    		System.out.println("1:" + controller.isLoggedIn());
-	    		if(!controller.isLoggedIn() || controller == null) {
-	    		%>
-	    		<a href="signin.jsp">Sign In</a>
-	    		<%} else { %>
-	    		Welcome,<%=username%><a href="index.jsp">Home</a>|<a href="favorite.jsp">Favorite</a>|<a href="group.jsp">Group</a>|<a href="setting.jsp">Setting</a>|<a href="logout.jsp">Sign Out</a>
-	    		<%} %>
-	    	</div>
+	    	<div id="topbar" align="right">
+	    		<a href="index.jsp">Home Page</a>|<a href="group.jsp">Group</a>|<a href="setting.jsp">Setting</a>|<a href="logout.jsp">Sign Out</a></div>
 	    	<div id="mainlogo" >
-	    		<a href="index.jsp"><img width="135" height="135" alt="logo" src="logo2.png"/></a>
+	    		<img width="135" height="135" alt="logo" src="Wiki3.png"/>
 			</div>
 	    	<hr/>
 	    	<div id="myfavorite" >
@@ -64,7 +58,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    		
 	    	</div>
 	    </div>
-	    <div id="bottom">
+	    <div id="bottom" align="right">
 	    	(c) ArnetWiki  <a href="">About</a> <a href="">Contact</a> <a href="">Help</a>
 	    </div>
     </div>

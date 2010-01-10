@@ -4,6 +4,8 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
     <base href="<%=basePath%>">
@@ -18,10 +20,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript" src="interface.js"></script>
 	<script type="text/javascript" src="main.js"></script>
-	<script type="text/javascript" src="getXmlHttp.js"></script>
   </head>
   <script type="text/javascript" src="fordebug.js"></script>
   <body>
+  	<br/>
+  	<br/>
+  	<br/>
   	<div id="outerframe" >
 	    <div id="mainframe" >
 	    	<%
@@ -36,23 +40,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    		%>
 	    		<a href="signin.jsp">Sign In</a>
 	    		<%} else { %>
-	    		Welcome,<%=username%><a href="index.jsp">Home</a>|<a href="favorite.jsp">Favorite</a>|<a href="group.jsp">Group</a>|<a href="setting.jsp">Setting</a>|<a href="logout.jsp">Sign Out</a>
+	    		Welcome,<%=username%><a href="favorite.jsp">Favorite</a>|<a href="group.jsp">Group</a>|<a href="setting.jsp">Setting</a>|<a href="logout.jsp">Sign Out</a>
 	    		<%} %>
 	    	</div>
 	    	<div id="mainlogo" >
-	    		<a href="index.jsp"><a href="index.jsp"><img width="135" height="135" alt="logo" src="logo2.png"/></a></a>
+	    		<img width="135" height="135" alt="logo" src="Wiki3.png"/>
 			</div>
-			<hr/>
+	    	<br/>
 	    	<div id="query">
 				<form method="post" action="result-list.jsp" name="searchform">
 					<input id="querytext" type="text" name="querytext"/>
 					<input id="searchbutton" type="submit" value="Search!" >
 				</form>
 	    	</div>  
-	    	<div id="trythis">
-	    		<div id="searchsamples"><a href="">SOA</a> <a href="">IR</a> </div>
-			</div>
-	    	
+	    	<br/>
+	    	<div id="trythis">Try This</div>
+	    	<hr/>
+	    	<div class="searchsamples"><a href="">SOA</a> <a href="">IR</a> </div>
 	    </div>
 	    <div id="bottom">
 	    	(c) ArnetWiki  <a href="">About</a> <a href="">Contact</a> <a href="">Help</a>

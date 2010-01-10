@@ -6,6 +6,8 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
     <base href="<%=basePath%>">
@@ -21,7 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript" src="interface.js"></script>
 	<script type="text/javascript" src="main.js"></script>
-	<script type="text/javascript" src="getXmlHttp.js"></script>
+
   </head>
   
   <script type="text/javascript" src="fordebug.js"></script>
@@ -33,20 +35,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<div id="outerframe" >
 	    <div id="mainframe">
 	    	<div id="topbar" ><a href="index.jsp">HomePage</a></div>
-    		<div id="mainlogo" >
-    			<a href="index.jsp"><img width="135" height="135" alt="logo" src="logo2.png"/></a>
-			</div>
-			<hr/>
-			<dir id="leftframe" >	
-				<div id="query">
-					<form method="post" action="result-list.jsp" name="searchform">
-						<input id="querytext" type="text" name="querytext"/>
-						<input id="searchbutton" type="submit" value="Search!" >
-					</form>
-		    	</div> 			
-	    		<div id="trythis">
-	    			<div class="searchsamples"><a href="">SOA</a> <a href="">IR</a> </div>
-				</div>	    		
+	    	<dir id="leftframe" >
+	    		<div id="mainlogo" >
+	    			<img width="135" height="135" alt="logo" src="Wiki3.png"/>
+				</div>
+	    		<div id="trythis">Try This</div>
+	    		<div class="searchsamples"><a href="">SOA</a> <a href="">IR</a> </div>
 	    	</dir>
 	    	<br/>
 	    	<div id="signin" >
@@ -62,24 +56,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 				<%
 	 					} else if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
 	 				 %>
-			    	<form id="loginform" method="post">
-						<div name="username" >Username : <br/>
+	    			<p>Please log in to continue:</p>
+			    	<form name="loginform" method="post">
+						<div name="username" >Username : 
 		    				<input name="usernametext" type="text" /></div>
-		    			<div name="password" >Password : <br/>
+		    			<div name="password" >Password : 
 		    				<input name="passwordtext" type="password"/></div>
 						<input type="submit" value="Login" />
-					</form>				    		
+					</form>	
+					<hr/>
+	    		<div id="donothaveaccout">if you do not have an account</div>
+	    		<!--<input id="signupsubmit" type="button" value="Sign Up!!" onClick="javascript:window.location='signup.jsp'" />-->
+	    		<input id="signupsubmit" type="button" value="Sign Up!!" onClick="window.open('http://minipie.net9.org:8080/Mini-Pie/signup/')" />	
 	    		<%
 	    			}else {
 						try {
 							controller.login(username, password);
 							session.setAttribute("username",username);
-							
-							String continued = request.getParameter("continue");
-							if(continued != null && !continued.trim().equals("")){
-								response.sendRedirect(continued);
-							}
-				%>					
+							session.setAttribute("password",password);
+				%>
 					<p>You've successfully logged in as <%=username %>.</p>
 					<a href="index.jsp">click to go to the index.</a>
 				<%
@@ -94,11 +89,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						}
 					}
 				%>
-	    		<hr/>
-	    		<div id="donothaveaccout">
-	    			<!--<input id="signupsubmit" type="button" value="Sign Up!!" onClick="javascript:window.location='signup.jsp'" />-->
-	    			<input id="signupsubmit" type="button" value="Sign Up!!" onClick="window.open('http://minipie.net9.org:8080/Mini-Pie/signup/')" />	
-				</div>	    		
 	    	</div>
 	    </div>
 	    <div id="bottom">
