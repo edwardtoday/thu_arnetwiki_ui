@@ -10,10 +10,6 @@ import org.dom4j.Element;
 
 import com.ociweb.xml.WAX;
 
-/**
- * @author LeeThree
- * 
- */
 public class GenericBean extends Bean {
 
 	public GenericBean(String name) {

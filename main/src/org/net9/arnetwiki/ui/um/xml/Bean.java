@@ -8,10 +8,6 @@ import java.util.Map;
 import org.dom4j.Attribute;
 import org.dom4j.Element;
 
-/**
- * @author LeeThree
- * 
- */
 public abstract class Bean{
 	
 	public long id;

@@ -5,10 +5,6 @@ package org.net9.arnetwiki.ui.um.xml;
 
 import com.ociweb.xml.WAX;
 
-/**
- * @author LeeThree
- * 
- */
 public class UpdateBean extends Bean {
 	private enum Update {
 		ADD, EDIT, DELETE

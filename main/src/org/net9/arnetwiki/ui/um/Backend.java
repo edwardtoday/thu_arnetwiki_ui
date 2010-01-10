@@ -15,12 +15,14 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sound.sampled.AudioFormat.Encoding;
 import javax.ws.rs.core.MediaType;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.ociweb.xml.Version;
 import com.ociweb.xml.WAX;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.UniformInterfaceException;
@@ -49,10 +51,24 @@ public class Backend {
 		return SERVICE_ROOT_URL;
 	}
 	
+	public void signup(String username, String password, String email) 
+		throws GenericException, NotFoundException {
+		try {
+			postForm("users", "username=" + username + 
+					"&email=" + email + "&password=" + password);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+	
 	public PersonBean getProfile() throws GenericException,
 			LoginFailedException {
 		try {
-			InputStream stream = getXml("profile");
+			InputStream stream = getXml("users/myself");
 			Document doc = new SAXReader().read(stream);
 			Element ele = doc.getRootElement();
 			return new PersonBean(ele);
@@ -64,8 +80,23 @@ public class Backend {
 			throw new GenericException(e);
 		}
 	}
-
-	// ************************************************************
+	
+	public void updateProfile(PersonBean updatebean) throws LoginFailedException,
+			GenericException, NotFoundException {
+		try {
+			StringWriter writer = new StringWriter();
+			WAX wax = new WAX(writer, Version.V1_0);
+			updatebean.toXML(wax);
+			wax.close();
+			putForm("users/myself", writer.toString());
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		}
+	}
 
 	public void auth() throws LoginFailedException, GenericException {
 		try {
