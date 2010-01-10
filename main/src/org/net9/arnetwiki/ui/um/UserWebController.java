@@ -39,13 +39,6 @@ public class UserWebController {
 		}
 	}
 	
-	public void signup(String username, String password, String email)
-	throws GenericException, SignupFailedException {
-		if(!isLogged()) {
-			Backend ses = new Backend(username, password);
-		}
-	}
-	
 	public void logout() {
 		if (isLogged()) {
 			getHttpSession().removeAttribute(SESSION_KEY);

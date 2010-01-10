@@ -15,7 +15,6 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sound.sampled.AudioFormat.Encoding;
 import javax.ws.rs.core.MediaType;
 
 import org.dom4j.Document;
@@ -25,6 +24,7 @@ import org.dom4j.io.SAXReader;
 import com.ociweb.xml.Version;
 import com.ociweb.xml.WAX;
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
@@ -32,12 +32,12 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 public class Backend {
 	private static final String AUTHENTICATION_HEADER = "Authorization";
-	private static final String SERVICE_ROOT_URL = "http://minipie.net9.org:8088/Mini-Pie/";
-	private static final String SERVICE_API_URL = SERVICE_ROOT_URL
-			+ "services/";
+	private static final String SERVICE_ROOT_URL = "http://minipie.net9.org/ArnetPie/";
+	private static final String SERVICE_API_URL = "http://minipie.net9.org/ArnetPie/resources/";
 	private Client client;
 	private WebResource rootResource;
 	private String credential;
+	private ClientResponse response;
 
 	public Backend(String username, String password) {
 		credential = "Basic "
@@ -46,16 +46,26 @@ public class Backend {
 		client = Client.create(config);
 		rootResource = client.resource(SERVICE_API_URL);
 	}
-
-	public static String getServiceRootUrl() {
-		return SERVICE_ROOT_URL;
-	}
 	
-	public void signup(String username, String password, String email) 
+	public String signup(String username, String password, String email) 
 		throws GenericException, NotFoundException {
 		try {
-			postForm("users", "username=" + username + 
-					"&email=" + email + "&password=" + password);
+			String entitycontent = "username=" + username + "&email=" + email + "&password=" + password;
+			response = rootResource.path("users").entity(entitycontent).post(ClientResponse.class);
+			return response.getEntity(String.class);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+	
+	public void changePassword(String password) throws GenericException, 
+				NotFoundException {
+		try {
+			putForm("password", "password=" + password);
 		} catch (UniformInterfaceException e) {
 			if (e.getResponse().getStatus() == 404)
 				throw new NotFoundException();
@@ -97,10 +107,24 @@ public class Backend {
 			throw new GenericException(e);
 		}
 	}
+	
+	public void listGroups() throws GenericException,
+			LoginFailedException {
+		try {
+			
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
 
 	public void auth() throws LoginFailedException, GenericException {
 		try {
-			getXml("auth");
+			rootResource.path("password/verify").header(AUTHENTICATION_HEADER, credential).get(
+					InputStream.class);
 		} catch (UniformInterfaceException e) {
 			if (e.getResponse().getStatus() == 401)
 				throw new LoginFailedException();
