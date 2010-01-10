@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jersey-core-1.1.0-ea.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jsr311-api-1.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/wax_1.0.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mysql-connector-java-5.1.6-bin.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
