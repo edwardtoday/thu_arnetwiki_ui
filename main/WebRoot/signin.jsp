@@ -46,56 +46,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<div id="signin" >
 	    		<%
 				  	request.setCharacterEncoding("UTF-8");
-				  	String username = request.getParameter("username");
-				  	String password = request.getParameter("password");
+				  	String username = request.getParameter("usernametext");
+				  	String password = request.getParameter("passwordtext");
 				  	UserWebController controller = new UserWebController(request);
-  					if(controller.isLoggedIn()) {
-  				%>
-  					<p>You've already logged in.</p>
-  				<%
-  					} else if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
-  				 %>
+	 					if(controller.isLoggedIn()) {
+	 				%>
+	 					<p>You've already logged in.</p>
+	 					<a href="index.jsp">click to go to the index.</a>
+	 				<%
+	 					} else if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+	 				 %>
 	    			<p>Please log in to continue:</p>
-	    		<form name="loginform" method="post" action="">
-	    			<div name="username" >Username : 
-	    				<input name="usernametext" type="text" /></div>
-	    			<div name="password" >Password : 
-	    				<input name="passwordtext" type="password"/></div>
-	    			<!-- <input id="rememberlogin" type="checkbox">remember the state<br> -->
-	    			<input id="loginsubmit" type="submit" value="login" onclick="validateLogin()"/><!--<a href="">forget the password?</a>-->
-	    		</form>
-	    		<script language="javascript">
-				     function validateLogin()
-				     {
-				      	var sUserName = document.loginform.usernametext.value;
-				      	var sPassword = document.loginform.passwordtext.value;
-				      	if( sUserName=="" )
-				      	{
-				       		alert("Please input the username!");
-				       		return false;
-				      	}
-				      	else if( sPassword=="" )
-				      	{
-				       		alert("Please input the password!");
-				       		return false;
-				      	}
-				      	else{
-				      		document.loginform.action="newindex.jsp"; 
-				      		document.loginform.Submit(); 
-				      	}
-				     }
-				 </script>
+			    	<form name="loginform" method="post">
+						<div name="username" >Username : 
+		    				<input name="usernametext" type="text" /></div>
+		    			<div name="password" >Password : 
+		    				<input name="passwordtext" type="password"/></div>
+						<input type="submit" value="Login" />
+					</form>	
+					<hr/>
+	    		<div id="donothaveaccout">if you do not have an account</div>
+	    		<!--<input id="signupsubmit" type="button" value="Sign Up!!" onClick="javascript:window.location='signup.jsp'" />-->
+	    		<input id="signupsubmit" type="button" value="Sign Up!!" onClick="window.open('http://minipie.net9.org:8080/Mini-Pie/signup/')" />	
 	    		<%
 	    			}else {
 						try {
 							controller.login(username, password);
-							String cont = request.getParameter("continue");
-							if (cont != null && !cont.isEmpty()) {
-								response.sendRedirect(cont);
-								return;
-							}
+							session.setAttribute("username",username);
 				%>
 					<p>You've successfully logged in as <%=username %>.</p>
+					<a href="index.jsp">click to go to the index.</a>
 				<%
 					} catch(LoginFailedException e){
 				%>
@@ -108,9 +88,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						}
 					}
 				%>
-	    		<hr/>
-	    		<div id="donothaveaccout">if you do not have an account</div>
-	    		<input id="signupsubmit" type="button" value="Sign Up!!" onClick="javascript:window.location='signup.jsp'" />
 	    	</div>
 	    </div>
 	    <div id="bottom">

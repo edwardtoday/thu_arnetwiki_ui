@@ -30,14 +30,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    <div id="mainframe" >
 	    	<%
 				request.setCharacterEncoding("UTF-8");
-				UserWebController controller = new UserWebController(request);  	
-
 			%>
 	    	<div id="topbar">
-	    	<%	if(true) {%>
+	    	<%	
+	    		UserWebController controller = new UserWebController(request);
+	    		String username = (String)session.getAttribute("username");
+	    		System.out.println("1:" + controller.isLoggedIn());
+	    		if(!controller.isLoggedIn() || controller == null) {
+	    		%>
 	    		<a href="signin.jsp">Sign In</a>
 	    		<%} else { %>
-	    		<a href="favorite.jsp">Favorite</a>|<a href="group.jsp">Group</a>|<a href="setting.jsp">Setting</a>|<a href="logout.jsp">Sign Out</a>
+	    		Welcome,<%=username%><a href="favorite.jsp">Favorite</a>|<a href="group.jsp">Group</a>|<a href="setting.jsp">Setting</a>|<a href="logout.jsp">Sign Out</a>
 	    		<%} %>
 	    	</div>
 	    	<div id="mainlogo" >
