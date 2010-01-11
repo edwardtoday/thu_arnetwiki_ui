@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
 <%@page import="org.net9.arnetwiki.ui.um.UserWebController"%>
 <%@page import="org.net9.arnetwiki.ui.um.xml.PersonBean"%>
 <%@page import="org.net9.arnetwiki.ui.um.xml.GenericBean"%>
@@ -33,7 +33,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<div id="outerframe" >
 	    <div id="mainframe">
 	    	<div id="topbar">
-	    	<a href="index.jsp">Home Page</a>|<a href="favorite.jsp">Favorite</a>|<a href="group.jsp">Group</a>|<a href="logout.jsp">Sign Out</a></div>
+	    	<%	
+	    		String username = (String)session.getAttribute("username");
+	    		System.out.println("1:" + controller.isLoggedIn());
+	    		if(!controller.isLoggedIn() || controller == null) {
+	    		%>
+	    		<a href="signin.jsp">Sign In</a>
+	    		<%} else { %>
+	    		Welcome,<%=username%><a href="index.jsp">Home</a>|<a href="favorite.jsp">Favorite</a>|<a href="group.jsp">Group</a>|<a href="setting.jsp">Setting</a>|<a href="logout.jsp">Sign Out</a>
+	    		<%} %>
+	    	</div>
 	    	<div id="mainlogo" >
 	    		<a href="index.jsp"><img width="135" height="135" alt="logo" src="logo2.png"/></a>
 			</div>

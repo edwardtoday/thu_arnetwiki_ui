@@ -7,5 +7,6 @@
 <%
 	WikiSaveTest tester = new WikiSaveTest(request);
 	tester.savePage();
+	//用jsp:forward转向时，浏览器的地址栏不变化，用户再刷新时会有问题。所以改用sendRedirect。
+	response.sendRedirect("wiki.jsp?"+request.getQueryString());
 %>
-<jsp:forward page="wiki.jsp"></jsp:forward>

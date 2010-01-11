@@ -9,5 +9,11 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jsr311-api-1.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/wax_1.0.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mysql-connector-java-5.1.6-bin.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xfire-all-1.2.6.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/activation.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/axis.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/soap.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/wsdl4j-1.5.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xmlsec.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

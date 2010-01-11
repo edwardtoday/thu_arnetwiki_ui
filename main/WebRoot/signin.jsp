@@ -75,10 +75,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							controller.login(username, password);
 							session.setAttribute("username",username);
 							
+							//跳转到刚才试图浏览的页面，或首页
 							String continued = request.getParameter("continue");
-							if(continued != null && !continued.trim().equals("")){
-								response.sendRedirect(continued);
+							if(continued == null || continued.trim().equals("")){
+								continued = "index.jsp";
 							}
+							response.sendRedirect(continued);
 				%>					
 					<p>You've successfully logged in as <%=username %>.</p>
 					<a href="index.jsp">click to go to the index.</a>

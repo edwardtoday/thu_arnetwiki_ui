@@ -47,12 +47,14 @@ public class WikiEditTest{
 					"<a href='#' class='closeEl'>[-]</a>" +
 				"</div>" +
 				"<div class='itemContent'>" + 
-					"<textarea name='" + content +
+					//注意 name=<header>
+					"<textarea name='" + header +
 					"'>" + content + 
 					"</textarea><br>" +
 				"</div>" +
 			"</div>";
 	}
+	//输出的wiki前后不能加其它信息，如“you are reading <ID> wiki”之类的，否则会影响拖拽
 	public String editTermPage()
 	{
 		return 	generateWikiEditItem("keyword", "test keyword") +

@@ -1,4 +1,3 @@
-
 <%@page import="org.net9.arnetwiki.ui.um.Backend"%>
 <%@page import="org.net9.arnetwiki.ui.um.UserWebController"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"

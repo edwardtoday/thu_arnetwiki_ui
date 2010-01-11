@@ -51,10 +51,10 @@ public class WikiPageTest {
 				"</div>" +
 			"</div>";
 	}
+	//输出的wiki前后不能加其它信息，如“you are reading <ID> wiki”之类的，否则会影响拖拽
 	public String getTermPage()
 	{
-		return "You are viewing term:" + getID() + 
-			"<br>" +
+		return 
 			generateWikiItem("keyword", "test keyword") +
 			generateWikiItem("definition", "test definition") +
 			generateWikiItem("conferences", "test conferences") +
@@ -65,8 +65,7 @@ public class WikiPageTest {
 	}
 	public String getPeoplePage()
 	{
-		return "You are viewing people:" + getID() + 
-			"<br>" +
+		return 
 			generateWikiItem("keyword", "test keyword") +
 			generateWikiItem("name", "test name") +
 			generateWikiItem("position", "test position") +
@@ -78,8 +77,7 @@ public class WikiPageTest {
 	}
 	public String getInstitutionPage()
 	{
-		return "You are viewing institution:" + getID() + 
-			"<br>" +
+		return 
 			generateWikiItem("keyword", "test keyword") +
 			generateWikiItem("location", "test location") +
 			generateWikiItem("peoplelist", "test peoplelist") +
