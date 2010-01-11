@@ -16,7 +16,7 @@ import com.ociweb.xml.WAX;
 public class PersonBean extends Bean {
 	
 	public Collection<GenericBean> usernames = new ArrayList<GenericBean>();
-	public Collection<GenericBean> nicknames = new ArrayList<GenericBean>();
+	public Collection<GenericBean> names = new ArrayList<GenericBean>();
 	public Collection<GenericBean> emails = new ArrayList<GenericBean>();
 	public Collection<GenericBean> genders = new ArrayList<GenericBean>();
 	public Collection<GenericBean> birthdates = new ArrayList<GenericBean>();
@@ -30,34 +30,35 @@ public class PersonBean extends Bean {
 	
 	public PersonBean(Element ele) {
 		beanName = ele.getName();
-		id = Long.decode(ele.attributeValue("id"));
-
+		
 		for (Object iter : ele.attributes()) {
 			Attribute attr = (Attribute) iter;
 			putAttribute(attr);
 		}
 		for (Object iter : ele.elements()) {
 			Element elem = (Element) iter;
+			String text = elem.getText();
+			if (elem.getName().equals("id"))
+				id = Long.decode(text);
 			if (elem.getName().equals("username"))
-				usernames.add(new GenericBean(elem));
-			else if (elem.getName().equals("nickname"))
-				nicknames.add(new GenericBean(elem));
+				usernames.add(new GenericBean(text));
+			else if (elem.getName().equals("name"))
+				names.add(new GenericBean(text));
 			else if (elem.getName().equals("email"))
-				emails.add(new GenericBean(elem));
+				emails.add(new GenericBean(text));
 			else if (elem.getName().equals("gender"))
-				genders.add(new GenericBean(elem));
+				genders.add(new GenericBean(text));
 			else if (elem.getName().equals("birthdate"))
-				birthdates.add(new GenericBean(elem));
+				birthdates.add(new GenericBean(text));
 			else if (elem.getName().equals("organization"))
-				organizations.add(new GenericBean(elem));
+				organizations.add(new GenericBean(text));
 			else if (elem.getName().equals("title"))
-				titles.add(new GenericBean(elem));
+				titles.add(new GenericBean(text));
 			else if (elem.getName().equals("interests"))
-				interests.add(new GenericBean(elem));
+				interests.add(new GenericBean(text));
 			else if (elem.isTextOnly())
 				putElement(elem);
 		}
-
 	}
 	
 	public void toXML(WAX wax) {
@@ -66,8 +67,8 @@ public class PersonBean extends Bean {
 		wax.child("id", String.valueOf(id));
 		for(GenericBean bean : usernames)
 			wax.child("username", bean.beanName);
-		for(GenericBean bean : nicknames)
-			wax.child("nickname", bean.beanName);
+		for(GenericBean bean : names)
+			wax.child("name", bean.beanName);
 		for(GenericBean bean : emails)
 			wax.child("email", bean.beanName);
 		for(GenericBean bean : genders)
@@ -83,15 +84,11 @@ public class PersonBean extends Bean {
 	}
 
 //	public static void main(String []args) {
-//		PersonBean updatebean = new PersonBean(5);
-//		updatebean.usernames.add(new GenericBean("HH1"));
-//		updatebean.nicknames.add(new GenericBean("HH2"));
-//		updatebean.emails.add(new GenericBean("HH3"));
+//		PersonBean updatebean = new PersonBean(12);
+//		updatebean.usernames.add(new GenericBean("deepsolo9"));
+//		updatebean.emails.add(new GenericBean("test@net9.org"));
 //		updatebean.genders.add(new GenericBean("HH4"));
 //		updatebean.birthdates.add(new GenericBean("HH5"));
-//		updatebean.organizations.add(new GenericBean("HH6"));
-//		updatebean.titles.add(new GenericBean("HH7"));
-//		updatebean.interests.add(new GenericBean("HH8"));
 //		StringWriter writer = new StringWriter();
 //		WAX wax = new WAX(writer, Version.V1_0);
 //		updatebean.toXML(wax);
