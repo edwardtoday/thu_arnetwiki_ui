@@ -39,7 +39,7 @@ public class WikiEditTest{
 				return editInstitutionPage();
 		}
 	}
-	private String generateWikiEditItem(String header, String content){
+	private String generateWikiItem(String header, String content){
 		return
 			"<div id = '" + header + "' class='groupItem'>" + 
 				"<div class='itemHeader'>" +
@@ -47,40 +47,42 @@ public class WikiEditTest{
 					"<a href='#' class='closeEl'>[-]</a>" +
 				"</div>" +
 				"<div class='itemContent'>" + 
-					"<textarea name='" + content +
-					"'>" + content + 
-					"</textarea><br>" +
+					"<textarea name='" + header + "'>" + content + "</textarea>" + 
 				"</div>" +
 			"</div>";
+		
 	}
 	public String editTermPage()
 	{
-		return 	generateWikiEditItem("keyword", "test keyword") +
-			generateWikiEditItem("definition", "test definition") +
-			generateWikiEditItem("conferences", "test conferences") +
-			generateWikiEditItem("papers", "test papers") +
-			generateWikiEditItem("people", "test people") +
-			generateWikiEditItem("institutions", "test institutions") +
-			generateWikiEditItem("dataset", "test dataset");
+		return 
+			generateWikiItem("keyword", "test keyword") +
+			generateWikiItem("definition", "test definition") +
+			generateWikiItem("conferences", "test conferences") +
+			generateWikiItem("papers", "test papers") +
+			generateWikiItem("people", "test people") +
+			generateWikiItem("institutions", "test institutions") +
+			generateWikiItem("dataset", "test dataset");
 	}
 	public String editPeoplePage()
 	{
-		return 	generateWikiEditItem("keyword", "test keyword") +
-			generateWikiEditItem("name", "test name") +
-			generateWikiEditItem("position", "test position") +
-			generateWikiEditItem("affliation", "test affliation") +
-			generateWikiEditItem("address", "test address") +
-			generateWikiEditItem("email", "test email") +
-			generateWikiEditItem("home-page", "test home-page") +
-			generateWikiEditItem("paperlist", "test paperlist");
+		return 
+			generateWikiItem("keyword", "test keyword") +
+			generateWikiItem("name", "test name") +
+			generateWikiItem("position", "test position") +
+			generateWikiItem("affliation", "test affliation") +
+			generateWikiItem("address", "test address") +
+			generateWikiItem("email", "test email") +
+			generateWikiItem("home-page", "test home-page") +
+			generateWikiItem("paperlist", "test paperlist");
 	}
 	public String editInstitutionPage()
 	{
-		return 	generateWikiEditItem("keyword", "test keyword") +
-			generateWikiEditItem("location", "test location") +
-			generateWikiEditItem("peoplelist", "test peoplelist") +
-			generateWikiEditItem("paperlist", "test paperlist") +
-			generateWikiEditItem("homepage", "test homepage");	
+		return 
+			generateWikiItem("keyword", "test keyword") +
+			generateWikiItem("location", "test location") +
+			generateWikiItem("peoplelist", "test peoplelist") +
+			generateWikiItem("paperlist", "test paperlist") +
+			generateWikiItem("homepage", "test homepage");	
 	}
 
 
