@@ -98,10 +98,7 @@ public class Backend {
 			WAX wax = new WAX(writer, Version.V1_0);
 			updatebean.toXML(wax);
 			wax.close();
-			rootResource.path("users/myself")
-				.type(MediaType.APPLICATION_XML_TYPE).header(
-				AUTHENTICATION_HEADER, credential).entity(writer.toString())
-				.put();
+			putForm("users/myself", writer.toString());
 		} catch (UniformInterfaceException e) {
 			if (e.getResponse().getStatus() == 401)
 				throw new LoginFailedException();
@@ -111,13 +108,10 @@ public class Backend {
 		}
 	}
 	
-	public String listGroups() throws GenericException,
+	public void listGroups() throws GenericException,
 			LoginFailedException {
 		try {
-			response = rootResource.path("connection/grouplist").accept(MediaType.TEXT_PLAIN_TYPE)
-			.header(AUTHENTICATION_HEADER, credential).get(
-					ClientResponse.class);
-			return response.getEntity(String.class);
+			
 		} catch (UniformInterfaceException e) {
 			if (e.getResponse().getStatus() == 401)
 				throw new LoginFailedException();

@@ -14,6 +14,7 @@ body
 	font-size: 11px;
 }
 
+/** for dragable layer ---------------------------------------------------------*/
 .groupWrapper 
 {
 	float: left;
@@ -44,7 +45,6 @@ body
 	position: relative;
 	font-family:verdana !important;
 }
-
 .groupItem .itemHeader a
 {
 	position: absolute;
@@ -68,9 +68,44 @@ body
 }
 .groupItem .itemContent
 {
-	margin: 10px 10px
+	margin: 10px 10px;
+	font-size: 125%;
 }
-<!-- page style start --------->
+
+/** page style ---------------------------------------------------------*/
+.items
+{
+	
+	border: 1px solid #aaa;
+}
+.items .content
+{
+	margin: 10px 10px;
+	font-size: 125%;
+}
+.items .header
+{
+	background-color:#EEEEEE;
+	border-bottom:1px solid #aaa;
+	font-size:150%;
+	padding:0.4em;
+	line-height: 28px;
+	color: #CF7606;
+	padding: 0 10px;
+	font-weight: bold;
+	height: 28px;
+	position: relative;
+	font-family:verdana !important;
+}
+.items .header a
+{
+	position: absolute;
+	right: 10px;
+	top: 0px;
+	font-weight: normal;
+	font-size: 11px;
+	text-decoration: none;
+}
 #mainframe
 {
 	overflow: auto;
@@ -90,6 +125,15 @@ body
 	width: 79%;
 	background: #fff;
 }
+#signupform
+{
+	padding: 20px;
+	border:1px solid #AAAAAA;
+	width: 79%;
+	background: #fff;
+}
+
+/** for topbar ---------------------------------------------------------*/
 #topbar
 {
 	text-align:right;
@@ -99,9 +143,7 @@ body
 	-moz-background-clip:border;
 	-moz-background-inline-policy:continuous;
 	-moz-background-origin:padding;
-	
 	border-bottom: medium none;
-	font-weight:bold;
 	padding:1px 0 1px 19px;
 	padding-left: 2px;
 }
@@ -111,6 +153,8 @@ a:link, a:visited
 	color:#002BB8;
 	text-decoration:none;
 }
+
+/** for navegation ---------------------------------------------------------*/
 ul { margin-bottom: 0; }
 #navegation li 
 {
@@ -119,34 +163,45 @@ ul { margin-bottom: 0; }
 	-moz-background-clip:border;
 	-moz-background-inline-policy:continuous;
 	-moz-background-origin:padding;
-	background:white none repeat scroll 0 0;
-	border-color:#AAAAAA #AAAAAA -moz-use-text-color;
-	border-style:solid solid none;
-	border-width:1px 1px medium;
-	display:inline;
-	overflow:visible;
-	padding:0 5px 2px 10px;
+	background: #F9F9F9;
+	border-color: #aaa;
+	border-style: solid solid none;
+	border-width: 1px 1px medium;
+	display: inline;
+	overflow: visible;
+}
+#navegation li a:hover
+{
+	background: white;
+	border-bottom: white solid 1px;
 }
 #navegation li a 
 {
-	background-color:#FBFBFB;
+	background-color: #EEEEEE ;
 	border:medium none;
 	color:#002BB8;
 	margin:0;
-	padding:0 0.8em 0.3em;
+	padding:0 1em;
 	position:relative;
 	text-decoration:none;
 	z-index:0;
+	
 }
-
 #navegation li.selected 
 {
 	border-color:#FABD23;
 	font-weight:bold;
-	padding:0 5px 0 6px;
-	margin-bottom: 0 none !important;
+	padding:0 0 0.1em !important;
+	background-color: white;
 }
-#bottom {
+#navegation li.selected a
+{
+	background-color: white;
+}
+
+/** for bottom ---------------------------------------------------------*/
+#bottom 
+{
 	width:80%;
     float: left;
 	background-color:white;
@@ -156,10 +211,121 @@ ul { margin-bottom: 0; }
 	padding:5px 0 10px 0;
 	text-align:center;
 }
-#bottom ul {
+#bottom ul 
+{
 	margin: 0 10px;
 }
-#bottom li {
+#bottom li 
+{
 	display:inline;
 	margin-left: 5px;
+}
+
+/** for changepassword ---------------------------------------------------------*/
+#currentpassword {}
+#currentpassword
+{
+	margin-bottom: 5px!important; 
+}
+#retypepassword
+{
+	margin-bottom: 5px;
+}
+#newpassword
+{
+	margin-bottom: 5px;
+}
+#changepassword
+{
+	margin-bottom: 5px;
+}
+
+
+#myfavorite,#searchfavorite,#mygroup,#searchgroup,#pdf-area,#trythis,#definition,#query,#result-list,#settingform,
+#signupform
+{
+	padding: 20px;
+	border:1px solid #AAAAAA;
+	width: 79%;
+	background: #fff;
+	float: left;
+	margin-right: 1%;
+	margin-bottom: 20px;
+}
+#email, #nickname, #settingsubmit,#changepassword
+{
+	margin-bottom: 5px;
+}
+#changepassword a:hover
+{
+	background: #EEEEEE;
+}
+
+/** for signin---------------------------------------------------------*/
+#leftframe
+{
+	padding: 20px;
+	border:1px solid #AAAAAA;
+	width: 35%;
+	background: #fff;
+	float: left;
+	margin-bottom: 20px;
+	margin-right: 20px;
+}
+#leftframe #trythis, #leftframe #query
+{
+	padding: 0 !important;
+	border:1px solid #AAAAAA;
+	background: #fff;
+	margin-right: 1%;
+	float: none !important;
+	margin-bottom: 20px;
+	width: 100%;
+}
+#signin
+{
+	padding: 20px;
+	border:1px solid #AAAAAA;
+	width: 35%;
+	background: #fff;
+	float: left;
+	margin-bottom: 20px;
+}
+#rememberlogin
+{
+	margin: 5px 10px 5px 5px;
+	float: left;
+}
+#loginsubmit
+{
+	margin: 5px 5px;
+}
+#signupsubmit a:hover
+{
+	background: #EEEEEE;
+}
+#loginform .items 
+{
+	margin-bottom: 20px;
+}
+
+/** for signupform ---------------------------------------------------------*/
+#signupform #retypepassword
+{
+	margin: 0!important;
+}
+#signupform div
+{
+	margin-bottom: 5px;
+}
+
+/** for wiki-content and edit ---------------------------------------------------------*/
+#wiki-content #definition 
+{
+	float: none!important;
+	padding: 0!important;
+	border:1px solid #AAAAAA;
+	background: #fff;
+	margin-right: 0!important;
+	width: 100%;
 }

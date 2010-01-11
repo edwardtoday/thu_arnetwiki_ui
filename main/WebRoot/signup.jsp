@@ -4,8 +4,6 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
     <base href="<%=basePath%>">
@@ -21,16 +19,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript" src="interface.js"></script>
 	<script type="text/javascript" src="main.js"></script>
-
+	<script type="text/javascript" src="getXmlHttp.js"></script>
   </head>
   
   <body>
-    <br/>
   	<div id="outerframe" >
 	    <div id="mainframe">
-	    	<div id="topbar" align="right"><a href="index.jsp">Home Page</a>|<a href="signin.jsp">Sign In</a></div>
+	    	<div id="topbar"><a href="index.jsp">Home Page</a>|<a href="signin.jsp">Sign In</a></div>
 	    	<div id="mainlogo" >
-	    		<img width="135" height="135" alt="logo" src="Wiki3.png"/>
+	    		<a href="index.jsp"><img width="135" height="135" alt="logo" src="logo2.png"/></a>
 			</div>
 	    	<hr/>
 	    	<%
@@ -42,12 +39,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				UserWebController controller = new UserWebController(request);
 				if(username == null || password == null || email == null || repassword == null || !password.equals(repassword)) {
 	    	 %>
-	    	<form name="signupform" action="" method="post">
-	    		<div>Welcome to ArnetWiki!</div>
-	    		<div>Username : <input name="username" type="text" /></div>
-	    		<div>Password : <input name="password" type="password" /></div>
-	    		<div>Retype Password : <input name="repassword" type="password" /></div>
-	    		<div>Email : <input name="email" type="text" /></div>
+	    	<form id="signupform" action="" method="post">
+	    		<div>Username : <br/><input name="username" type="text" /></div>
+	    		<div>Password : <br/><input name="password" type="password" /></div>
+	    		<div>Retype Password : <br/><input name="repassword" type="password" /></div>
+	    		<div>Email : <br/><input name="email" type="text" /></div>
 	    		<input id="signupsubmit" type="submit" value="Sign Up!!" onclick="validateLogin()">
 	    	</form>
 	    	<script language="javascript">
@@ -94,7 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	
 	    }
 	     %>
-	    <div id="bottom" align="right">
+	    <div id="bottom">
 	    	(c) ArnetWiki  <a href="">About</a> <a href="">Contact</a> <a href="">Help</a>
 	    </div>
     </div>

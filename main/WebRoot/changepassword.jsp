@@ -1,11 +1,10 @@
 <%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@page import="org.net9.arnetwiki.ui.um.UserWebController"%>
 <%@ include file="/session.jsp"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
     <base href="<%=basePath%>">
@@ -21,60 +20,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript" src="interface.js"></script>
 	<script type="text/javascript" src="main.js"></script>
-
+	<script type="text/javascript" src="getXmlHttp.js"></script>
   </head>
   
   <body>
-    <br/>
   	<div id="outerframe" >
 	    <div id="mainframe" >
 	    	<div id="topbar">
-	    	<a href="index.jsp">Home Page</a>|<a href="favorite.jsp">Favorite</a>|<a href="group.jsp">Group</a>|<a href="setting.jsp">Setting</a>|<a href="logout.jsp">Sign Out</a></div>
-	    	<div id="mainlogo" >
-	    		<img width="135" height="135" alt="logo" src="Wiki3.png"/>
+	    	<%	
+	    		String username = (String)session.getAttribute("username");
+	    		System.out.println("1:" + controller.isLoggedIn());
+	    		if(!controller.isLoggedIn() || controller == null) {
+	    		%>
+	    		<a href="signin.jsp">Sign In</a>
+	    		<%} else { %>
+	    		Welcome,<%=username%><a href="index.jsp">Home</a>|<a href="favorite.jsp">Favorite</a>|<a href="group.jsp">Group</a>|<a href="setting.jsp">Setting</a>|<a href="logout.jsp">Sign Out</a>
+	    		<%} %>
+	    	</div>	    	<div id="mainlogo" >
+	    		<a href="index.jsp"><img width="135" height="135" alt="logo" src="logo2.png"/></a>
 			</div>
 	    	<hr/>
-	    	<%
-				  	request.setCharacterEncoding("UTF-8");
-				  	String currentpassword = request.getParameter("currentpassword");
-				  	String oldpassword = (String)session.getAttribute("password");
-				  	String newpassword = request.getParameter("newpassword");
-				  	String renewpassword = request.getParameter("retypenewpassword");
-				  		if(currentpassword != null && !currentpassword.equals(oldpassword)) {
-	 				%>
-	 					<p>Old Password error!</p>
-	 				<%
-	 					} else if(newpassword != null && !newpassword.equals(renewpassword)) {
-	 				%>
-	 					<p>New password not equal!</p>
-	 				<%
-	 					} else if (currentpassword == null || currentpassword.isEmpty() || 
-	 					newpassword == null || newpassword.isEmpty() || 
-	 					renewpassword == null || renewpassword.isEmpty()) {
-	 				 %>
 	    	<form id="signupform" action="">
-	    		<div>Welcome to ArnetWiki!</div>
-	    		<div>Current password : <input id="currentpassword" type="password"/></div>
-	    		<div>New password : <input id="newpassword" type="password"/></div>
-	    		<div>Retype New password : <input id="retypenewpassword" type="password"/></div>
+	    		<div>Current password : <br/><input id="currentpassword" type="password"/></div>
+	    		<div>New password : <br/><input id="newpassword" type="password"/></div>
+	    		<div>Retype New password : <br/><input id="retypenewpassword" type="password"/></div>
 	    		<input id="changepassword" type="button" value="Save" onClick="javascript:window.location='setting.jsp'"/>
 	    	</form>
-	    	<%
-	    			}else {
-						try {
-							
-				%>
-					<p>You've successfully changed the password.</p>
-				<%
-					} catch (Exception e) {
-						e.printStackTrace();
-						response.sendRedirect("error.jsp");
-						return;
-						}
-					}
-				%>
 	    </div>
-	    <div id="bottom" align="right">
+	    <div id="bottom">
 	    	(c) ArnetWiki  <a href="">About</a> <a href="">Contact</a> <a href="">Help</a>
 	    </div>
     </div>
