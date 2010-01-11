@@ -53,7 +53,8 @@ public class WikiPageTest {
 	}
 	public String getTermPage()
 	{
-		return 
+		return "You are viewing term:" + getID() + 
+			"<br>" +
 			generateWikiItem("keyword", "test keyword") +
 			generateWikiItem("definition", "test definition") +
 			generateWikiItem("conferences", "test conferences") +
@@ -64,7 +65,8 @@ public class WikiPageTest {
 	}
 	public String getPeoplePage()
 	{
-		return 
+		return "You are viewing people:" + getID() + 
+			"<br>" +
 			generateWikiItem("keyword", "test keyword") +
 			generateWikiItem("name", "test name") +
 			generateWikiItem("position", "test position") +
@@ -76,7 +78,8 @@ public class WikiPageTest {
 	}
 	public String getInstitutionPage()
 	{
-		return 
+		return "You are viewing institution:" + getID() + 
+			"<br>" +
 			generateWikiItem("keyword", "test keyword") +
 			generateWikiItem("location", "test location") +
 			generateWikiItem("peoplelist", "test peoplelist") +
