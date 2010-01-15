@@ -13,10 +13,14 @@ import org.net9.arnetwiki.ui.um.xml.UpdateBean;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 
+import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -47,6 +51,15 @@ public class Backend {
 		rootResource = client.resource(SERVICE_API_URL);
 	}
 	
+	/**
+	 * Sign up
+	 * @param username
+	 * @param password
+	 * @param email
+	 * @return
+	 * @throws GenericException
+	 * @throws NotFoundException
+	 */
 	public String signup(String username, String password, String email) 
 		throws GenericException, NotFoundException {
 		try {
@@ -75,6 +88,12 @@ public class Backend {
 		}
 	}
 	
+	/**
+	 * getProfile
+	 * @return
+	 * @throws GenericException
+	 * @throws LoginFailedException
+	 */
 	public PersonBean getProfile() throws GenericException,
 			LoginFailedException {
 		try {
@@ -91,6 +110,13 @@ public class Backend {
 		}
 	}
 	
+	/**
+	 * updateProfile
+	 * @param updatebean
+	 * @throws LoginFailedException
+	 * @throws GenericException
+	 * @throws NotFoundException
+	 */
 	public void updateProfile(PersonBean updatebean) throws LoginFailedException,
 			GenericException, NotFoundException {
 		try {
@@ -111,12 +137,142 @@ public class Backend {
 		}
 	}
 	
-	public String listGroups() throws GenericException,
+	/**
+	 * addPdfFavorite
+	 * @param id
+	 * @throws GenericException
+	 * @throws LoginFailedException
+	 */
+	public void addPdfFavorite(String id) throws GenericException,
+		LoginFailedException {
+		try {
+			response = rootResource.path("collection/pdfs")
+			.header(AUTHENTICATION_HEADER, credential).entity("pdfid=" + id)
+			.post(ClientResponse.class);
+		} catch (UniformInterfaceException e) {
+			if(e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		}
+	}
+	
+	/**
+	 * deletePdfFavorite
+	 * @param id
+	 * @throws GenericException
+	 * @throws LoginFailedException
+	 */
+	public void deletePdfFavorite(String id) throws GenericException,
 			LoginFailedException {
 		try {
-			response = rootResource.path("connection/grouplist").accept(MediaType.TEXT_PLAIN_TYPE)
-			.header(AUTHENTICATION_HEADER, credential).get(
+			response = rootResource.path("collection/pdfs/" + id).header(
+					AUTHENTICATION_HEADER, credential)
+					.delete(ClientResponse.class);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		}
+	}
+	
+	/**
+	 * addWikiFavorite
+	 * @param id
+	 * @throws GenericException
+	 * @throws LoginFailedException
+	 */
+	public void addWikiFavorite(String id) throws GenericException,
+			LoginFailedException {
+		try {
+			response = rootResource.path("collection/wikipages").header(
+					AUTHENTICATION_HEADER, credential).entity("wikipageid=" + id)
+					.post(ClientResponse.class);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		}
+	}
+	
+	/**
+	 * deleteWikiFavorite
+	 * @param id
+	 * @throws GenericException
+	 * @throws LoginFailedException
+	 */
+	public void deleteWikiFavorite(String id) throws GenericException,
+			LoginFailedException {
+		try {
+			response = rootResource.path("collection/wikipages/" + id).header(
+					AUTHENTICATION_HEADER, credential).delete(
 					ClientResponse.class);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		}
+	}
+	
+	/**
+	 * getFavorites
+	 * @return
+	 * @throws GenericException
+	 * @throws LoginFailedException
+	 */
+	public Map<String, ArrayList<String>> getFavorites() throws GenericException,
+			LoginFailedException {
+		try {
+//			InputStream stream = getXml("collection");
+//			Document doc = new SAXReader().read(stream);
+			Map<String, ArrayList<String>> result = new 
+					HashMap<String, ArrayList<String>>();
+//			List pdflists = doc.selectNodes("pdf");
+//          Iterator pdfit = pdflists.iterator();
+            ArrayList<String> pdfs = new ArrayList<String>();
+//            while(pdfit.hasNext()){
+//	            Element elm = (Element)pdfit.next();
+//	            Attribute attribute = elm.attribute("id");
+//	            String nodename = attribute.getValue();
+//	            pdfs.add(nodename);
+//            }
+            pdfs.add("pdf1");
+            pdfs.add("pdf2");
+            result.put("pdf", pdfs);
+//          List wikipagelists = doc.selectNodes("wiki-page");
+//          Iterator wikipageit = wikipagelists.iterator();
+            ArrayList<String> wikipages = new ArrayList<String>();
+//          while(wikipageit.hasNext()){
+//	            Element elm = (Element)wikipageit.next();
+//	            Attribute attribute = elm.attribute("tag");
+//	            String nodename = attribute.getValue();
+//	            wikipages.add(nodename);
+//          }
+            wikipages.add("wiki1");
+            wikipages.add("wiki2");
+            result.put("wikipage", wikipages);
+            return result;
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+	
+	/**
+	 * createGroup
+	 * @param name
+	 * @return
+	 * @throws GenericException
+	 * @throws LoginFailedException
+	 */
+	public String createGroup(String name) throws GenericException,
+			LoginFailedException {
+		try {
+			String entitycontent = "group=" + name;
+			response = rootResource.path("groups").header(
+					AUTHENTICATION_HEADER, credential).entity(entitycontent).post(ClientResponse.class);
 			return response.getEntity(String.class);
 		} catch (UniformInterfaceException e) {
 			if (e.getResponse().getStatus() == 401)
@@ -126,7 +282,85 @@ public class Backend {
 			throw new GenericException(e);
 		}
 	}
-
+	
+	/**
+	 * joinGroup
+	 * @param groupid
+	 * @throws GenericException
+	 * @throws LoginFailedException
+	 */
+	public void joinGroup(String groupid) throws GenericException,
+			LoginFailedException {
+		try {
+			String entitycontent = "groupid=" + groupid;
+			response = rootResource.path("connection/group_apply").header(
+					AUTHENTICATION_HEADER, credential)
+				.entity(entitycontent).post(ClientResponse.class);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	} 
+	
+	/**
+	 * listGroups
+	 * @return
+	 * @throws GenericException
+	 * @throws LoginFailedException
+	 */
+	public ArrayList<String> listGroups() throws GenericException,
+			LoginFailedException {
+		try {
+//			response = rootResource.path("connection/grouplist").accept(MediaType.TEXT_PLAIN_TYPE)
+//			.header(AUTHENTICATION_HEADER, credential).get(
+//					ClientResponse.class);
+//			String result = response.getEntity(String.class);
+//			String split[] = result.split("&");
+			ArrayList<String> groupList = new ArrayList<String>();
+//			for(int i = 0; i < split.length; i++)
+//				groupList.add(split[i]);
+			groupList.add("1");
+			groupList.add("2");
+			groupList.add("3");
+			groupList.add("4");
+			return groupList;
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+	
+	/**
+	 * quitGroup
+	 * @param groupid
+	 * @throws GenericException
+	 * @throws LoginFailedException
+	 */
+	public void quitGroup(String groupid) throws GenericException,
+			LoginFailedException {
+		try {
+			rootResource.path("connection/grouplist/" + groupid).header(
+					AUTHENTICATION_HEADER, credential).delete();
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	} 
+	
+	/**
+	 * login
+	 * @throws LoginFailedException
+	 * @throws GenericException
+	 */
 	public void auth() throws LoginFailedException, GenericException {
 		try {
 			rootResource.path("password/verify").header(AUTHENTICATION_HEADER, credential).get(

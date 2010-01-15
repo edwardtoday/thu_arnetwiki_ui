@@ -1,22 +1,30 @@
 package org.net9.arnetwiki.ui.um;
 
-import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Map;
 
 import org.net9.arnetwiki.ui.um.exception.GenericException;
 import org.net9.arnetwiki.ui.um.exception.LoginFailedException;
 import org.net9.arnetwiki.ui.um.exception.NotFoundException;
-import org.net9.arnetwiki.ui.um.xml.GenericBean;
 import org.net9.arnetwiki.ui.um.xml.PersonBean;
-
-import com.ociweb.xml.Version;
-import com.ociweb.xml.WAX;
 
 public class Test {
 	public static void main(String []args) 
 	throws GenericException, NotFoundException, LoginFailedException {
 		Backend be = new Backend("deepsolo9", "testdeepsolo");
 		be.auth();
-		System.out.println("1:" + be.listGroups());
+		be.createGroup("Ts1");
+//		be.quitGroup("1");
+//		System.out.println(be.createGroup("Test1"));
+//		be.joinGroup(groupid);
+//		be.addPdfFavorite("1");
+//		be.addPdfFavorite("2");
+//		Map<String, ArrayList<String>> result = be.getFavorites();
+//		ArrayList<String> pdfs = result.get("pdf");
+//		for (String str : pdfs) {
+//			System.out.println(str);
+//		}
+//		System.out.println("1:" + be.listGroups());
 		
 //		be.changePassword("testtest");
 //		PersonBean updateBean = be.getProfile();
