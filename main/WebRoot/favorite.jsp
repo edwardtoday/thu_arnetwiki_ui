@@ -1,5 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
 <%@page import="org.net9.arnetwiki.ui.um.UserWebController"%>
+<%@page import="org.net9.arnetwiki.ui.um.exception.LoginFailedException"%>
+<%@page import="org.net9.arnetwiki.ui.um.exception.GenericException"%>
 <%@ include file="/session.jsp"%>
 <%
 String path = request.getContextPath();
@@ -26,6 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<%
   		request.setCharacterEncoding("UTF-8");
+  		String method = request.getParameter("method");
   	 %>
   	<div id="outerframe" >
 	    <div id="mainframe" >
@@ -45,23 +48,72 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 	    	<hr/>
 	    	<div id="myfavorite" >
+	    		<% Map<String, ArrayList<String>> myfavorites = ses.getFavorites();
+	    		 %>
 	    		<table id="myfavoritetable">
 	    			<tr>
-	    				<td>Welcome1</td>
-	    				<td><input type="button" value="I want to delete it!!"/></td>
+	    				<td>PDF</td>
 	    			</tr>
+	    			<% ArrayList<String> pdfs = myfavorites.get("pdf");
+	    				for(String pdfid : pdfs) {
+	    			 %>
 	    			<tr>
-	    				<td>Welcome2</td>
-	    				<td><input type="button" value="I want to delete it!!"/></td>
+	    				<td><a href=""><%=pdfid %></a></td>
+	    				<td><form name="removepdf" method="post">
+							<input type="hidden" name="method" id="method" value="removepdf"/>
+							<input type="hidden" name="pdfid" value="<%=pdfid%>"/>
+							<input type="submit" value="Quit"/>
+							</form>
+						</td>
 	    			</tr>
+	    			<% } %>
 	    			<tr>
-	    				<td>Welcome3</td>
-	    				<td><input type="button" value="I want to delete it!!"/></td>
+	    				<td>WikiPage</td>
 	    			</tr>
+	    			<% 
+	    				ArrayList<String> wikipages = myfavorites.get("wikipage");
+	    				for(String wikiid : wikipages) {
+	    			 %>
+	    			<tr>
+	    				<td><a href=""><%=wikiid %></a></td>
+	    				<td><form name="removewiki" method="post">
+							<input type="hidden" name="method" id="method" value="removewiki"/>
+							<input type="hidden" name="wikiid" value="<%=wikiid%>"/>
+							<input type="submit" value="Quit"/>
+							</form>
+						</td>
+	    			</tr>
+	    			<%
+	    			 } %>
 	    		</table>
-	    	</div>
-	    	<div id="searchfavorite" >
-	    		
+	    		<%
+	    			if (method != null && method.equals("removepdf")) {
+						String removepdfid = request.getParameter("pdfid");
+						try {
+							ses.deletePdfFavorite(removepdfid);
+						} catch (LoginFailedException e) {
+					%>
+							<p>You may not have logged in.</p> <%
+						} catch (GenericException e) {
+						%>
+							<p>An internal error occurred. </p>
+						<% 
+						}
+					}
+					if (method != null && method.equals("removewiki")) {
+						String removewikiid = request.getParameter("wikiid");
+						try {
+							ses.deleteWikiFavorite(removewikiid);
+						} catch (LoginFailedException e) {
+					%>
+							<p>You may not have logged in.</p> <%
+						} catch (GenericException e) {
+						%>
+							<p>An internal error occurred. </p>
+						<% 
+						}
+					}
+	    		 %>
 	    	</div>
 	    </div>
 	    <div id="bottom">

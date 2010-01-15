@@ -1,6 +1,8 @@
 <%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
 <%@ include file="/session.jsp"%>
 <%@page import="org.net9.arnetwiki.ui.um.UserWebController"%>
+<%@page import="org.net9.arnetwiki.ui.um.exception.LoginFailedException"%>
+<%@page import="org.net9.arnetwiki.ui.um.exception.GenericException"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -26,6 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	 <%
   		request.setCharacterEncoding("UTF-8");
+  		String method = request.getParameter("method");
   		//UserWebController controller = new UserWebController(request);
   	 %>
   	<div id="outerframe" >
@@ -46,26 +49,69 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 	    	<hr/>
 	    	<div id="mygroup" >
+	    		<% ArrayList<String> mygroups = ses.listGroups();
+	    		 %>
 	    		<table id="mygrouptable">
+	    			<% for(String groupid : mygroups) {
+	    			%> 
 	    			<tr>
-	    				<td>Welcome1</td>
-	    				<td><input type="button" value="I want to quit!!"/></td>
+	    				<td><a href=""><%=groupid %></a></td>
+	    				<td><form name="removegroup" method="post">
+							<input type="hidden" name="method" id="method" value="removegroup"/>
+							<input type="hidden" name="groupid" value="<%=groupid%>"/>
+							<input type="submit" value="Quit"/>
+							</form>
+						</td>
 	    			</tr>
-	    			<tr>
-	    				<td>Welcome2</td>
-	    				<td><input type="button" value="I want to quit!!"/></td>
-	    			</tr>
-	    			<tr>
-	    				<td>Welcome3</td>
-	    				<td><input type="button" value="I want to quit!!"/></td>
-	    			</tr>	
+	    			<% }
+	    			 %>	
 	    		</table>
+	    		<%
+	    			if (method != null && method.equals("removegroup")) {
+						String removegroupid = request.getParameter("groupid");
+						try {
+							ses.quitGroup(removegroupid);
+						} catch (LoginFailedException e) {
+					%>
+							<p>You may not have logged in.</p> <%
+						} catch (GenericException e) {
+						%>
+							<p>An internal error occurred. </p>
+						<% 
+						}
+					}
+	    		 %>
 	    	</div>
 	    	<div id="searchgroup" >
 	    		<input type="text" name="querytext"/>
 	    		<input type="button" id="searchgroupbutton" value="Search!!" onclick=""/>
 	    		<div id="searchgroupresult" ></div>
 	    	</div>
+	    	<div id="creategroup" >
+		    	<div class="items">
+					<div class="header">Create Group</div>
+					<div class="content">
+						<form name="creategroup" method="post">
+							<input type="text" name="createtext"/>
+							<input type="submit" value="Create"/>
+						</form>
+				<%	String creategroupid = request.getParameter("createtext");	 
+					if (method != null && creategroupid != null
+					&& !creategroupid.isEmpty() && method.equals("creategroup")) {
+						try {
+							ses.createGroup(creategroupid);
+						} catch (LoginFailedException e) {
+					%>
+							<p>You may not have logged in.</p> <%
+						} catch (GenericException e) {
+						%>
+							<p>An internal error occurred. </p>
+						<% 
+						}
+					}
+				%></div>
+				</div>
+			</div>
 	    </div>
 	    <div id="bottom">
 	    	(c) ArnetWiki  <a href="">About</a> <a href="">Contact</a> <a href="">Help</a>
