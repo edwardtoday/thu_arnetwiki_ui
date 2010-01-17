@@ -30,13 +30,14 @@
 	    		<a href="index.jsp"><img width="135" height="135" alt="logo" src="logo2.png"/></a>
 			</div>
 			<hr/>
-			<%String id = request.getParameter("wiki-id"); %>
+			<%String papername = request.getParameter("papername"); %>
+			papername:<%=papername%><br>
 			<div id="pdf-area">
 				<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="600" height="800" align="middle">
 					<param name="allowScriptAccess" value="sameDomain">
 					<param name="movie" value="comment.swf"> 
-					<param name="FlashVars" value="wiki-id=<%=id%>">
-					<embed src="comment.swf" Flashvars="<%=id%>" width=600  height=800>
+					<param name="FlashVars" value="papername=<%=papername%>">
+					<embed src="comment.swf" Flashvars="<%=papername%>" width=600  height=800>
 				</object>
 			</div>
 		</div>

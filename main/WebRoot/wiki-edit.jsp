@@ -37,7 +37,6 @@
 	    		<ul lang="en" xml:lang="en">
 	    			<li><a href="wiki.jsp?style=<%=style%>&wiki-id=<%=id%>">View</a></li>
 					<li class='selected'><a href="wiki-edit.jsp?style=<%=style%>&wiki-id=<%=id%>">Edit</a></li>
-					<li><a href="pdf-comment.jsp?style=<%=style%>&wiki-id=<%=id%>">View Pdf</a></li>
 				</ul>
 			</div>
 			<div id='wiki-content'class="groupWrapper">	 
