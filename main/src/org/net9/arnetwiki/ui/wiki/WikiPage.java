@@ -2,22 +2,22 @@ package org.net9.arnetwiki.ui.wiki;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import java.util.List;
 import java.util.ArrayList;
 
 import java.io.*;
 import java.util.*;
 import java.net.*;
-import org.w3c.dom.*;
-import org.apache.soap.util.xml.*;
-import org.apache.soap.*;
-import org.apache.soap.encoding.*;
-import org.apache.soap.encoding.soapenc.*;
-import org.apache.soap.rpc.*;
-import org.apache.soap.transport.http.SOAPHTTPConnection;
 
-import edu.thu.soa2009.wiki.*;
+import org.codehaus.xfire.client.Client;   
+import org.apache.ws.commons.schema.resolver.*;
+
+import org.wikigroup.WikiService.WikiServiceLocator;
+import org.wikigroup.WikiService.WikiServicePortType;
+
+import org.dom4j.*;
+import org.dom4j.io.*; 
+
 
 /*
  * @author zym
@@ -26,14 +26,9 @@ import edu.thu.soa2009.wiki.*;
 
 public class WikiPage {
 	private HttpServletRequest request;
-	private String endpoint = "http://127.0.0.1:8088/mockwikiHttpBinding";
-
+	String wikixml;
 	public WikiPage (HttpServletRequest request) {
 		this.request = request;
-	}
-	public String test()
-	{
-		return "Test Success";
 	}
 	public String getID()
 	{
@@ -45,65 +40,21 @@ public class WikiPage {
 	}
 	public String showPage()
 	{
-		WikiPage res;
 		try {
-	    		URL url = new URL (endpoint);
-			SOAPMappingRegistry smr = new SOAPMappingRegistry ();
-			StringDeserializer sd = new StringDeserializer ();
-			smr.mapTypes (Constants.NS_URI_SOAP_ENC, new QName ("", "wiki_click"), null, null, sd);
-	        // 创建传输路径和参数
-			SOAPHTTPConnection st = new SOAPHTTPConnection();
-	        // 创建调用
-			Call call = new Call ();
-			call.setSOAPTransport(st);
-			call.setSOAPMappingRegistry (smr);
-	
-			call.setTargetObjectURI (endpoint);
-			call.setMethodName("wiki_click");
-			call.setEncodingStyleURI ("http://schemas.xmlsoap.org/soap/encoding/");
-	
-			Vector params = new Vector();
-			params.addElement(new Parameter("wiki_ID", String.class, getID(), null));
-			params.addElement(new Parameter("wiki_versionNo", String.class, "1", null));
-			call.setParams(params);
-			Response resp = null;
-			try {
-				resp = call.invoke (url, "wiki_click");
-			}
-			catch (SOAPException e) {
-				System.err.println("Caught SOAPException (" + e.getFaultCode () + "): " + e.getMessage ());
-				return null;
-			}
-	        // 检查返回值
-			if (resp != null && !resp.generatedFault()) {
-				Parameter ret = resp.getReturnValue();
-				Object value = ret.getValue();
-				System.out.println ("Answer--> " + value);
-	
-				edu.thu.soa2009.wiki.WikiPage wp = (edu.thu.soa2009.wiki.WikiPage)value;
-				switch(getType())
-				{
-					case 1:		//term
-						return getTermPage(wp);
-					case 2:		//people
-						return getPeoplePage(wp);
-					default:	//institution
-						return getInstitutionPage(wp);
-				}
-			} else {
-				Fault fault = resp.getFault ();
-				System.err.println ("Generated fault: ");
-				System.out.println (" Fault Code = " + fault.getFaultCode());
-				System.out.println (" Fault String = " + fault.getFaultString());
-				return null;
-			}
-	
-		}
-		catch (Exception e) 
-		{
-			System.err.println(e.toString());
+			WikiServicePortType service = new WikiServiceLocator()
+					.getWikiServiceHttpPort();
+			wikixml = service.getWikiPage(getID());
+		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+		}
+		switch(getType())
+		{
+			case 1:		//term
+				return getTermPage();
+			case 2:		//people
+				return getPeoplePage();
+			default:	//institution//"Conf"
+				return getInstitutionPage();
 		}
 	}
 	private String generateWikiItem(String header, String content){
@@ -118,47 +69,162 @@ public class WikiPage {
 				"</div>" +
 			"</div>";
 	}
-	public String getTermPage(edu.thu.soa2009.wiki.WikiPage wp)
-	{
-		TermPage tp = wp.getTerm();
-		PeopleType people = tp.getPeople();
-		InstiType institution = tp.getInsitutions();
-
-		return "You are viewing term:" + getID() + 
-			"<br>" +
-			generateWikiItem("keyword", "test keyword") +
-			generateWikiItem("definition", tp.getDef()) +
-			generateWikiItem("conferences", "test conferences") +
-			generateWikiItem("papers", tp.getPapers()) +
-			generateWikiItem("people", people.getName()) +
-			generateWikiItem("institutions", institution.getLocation()) +
-			generateWikiItem("dataset", tp.getDataset());
+	private String generateWikiLink(String header, String content){
+		return
+			"<div id = '" + header + "' class='groupItem'>" + 
+				"<div class='itemHeader'>" +
+					header +
+					"<a href='#' class='closeEl'>[-]</a>" +
+				"</div>" +
+				"<div class='itemContent'>" + 
+					"<a href='" + content + "'>" + content + "</a>" +
+				"</div>" +
+			"</div>";
 	}
-	public String getPeoplePage(edu.thu.soa2009.wiki.WikiPage wp)
-	{
-		PeopleType pt = wp.getPeople().getPeopleList();
-
-		return "You are viewing people:" + getID() + 
-			"<br>" +
-			generateWikiItem("keyword", "test keyword") +
-			generateWikiItem("name", pt.getName()) +
-			generateWikiItem("position", pt.getPosition()) +
-			generateWikiItem("affliation", "test affliation") +
-			generateWikiItem("address", pt.getAddress()) +
-			generateWikiItem("email", pt.getEmail()) +
-			generateWikiItem("home-page", pt.getHomePage()) +
-			generateWikiItem("paperlist", pt.getPaperlist());
+	private String generateWikiMail(String header, String content){
+		return
+			"<div id = '" + header + "' class='groupItem'>" + 
+				"<div class='itemHeader'>" +
+					header +
+					"<a href='#' class='closeEl'>[-]</a>" +
+				"</div>" +
+				"<div class='itemContent'>" + 
+					"<a href='mailto:" + content + "'>" + content + "</a>" +
+				"</div>" +
+			"</div>";
 	}
-	public String getInstitutionPage(edu.thu.soa2009.wiki.WikiPage wp)
+	private String generateListStarter(String header){
+		return
+			"<div id = '" + header + "' class='groupItem'>" + 
+				"<div class='itemHeader'>" +
+					header +
+					"<a href='#' class='closeEl'>[-]</a>" +
+				"</div>" +
+				"<div class='itemContent'>";
+	}
+	private String generateListContent(String content){
+		return			"<a rel='external' href='result-list.jsp?querytext=" + content + "'>" +
+					content + "</a><br>";
+	}
+	private String generatePaperContent(String content){
+		return			"<a rel='external' href='pdf-comment.jsp?papername=" + content + "'>" +
+					content + "</a><br>";
+	}
+	private String generateListEnd(){
+		return		"</div>" +
+			"</div>";
+	}
+	
+	public String getTermPage()
 	{
-		InstiType it = wp.getInsti().getInstiList();
-		return "You are viewing institution:" + getID() + 
-			"<br>" +
-			generateWikiItem("keyword", "test keyword") +
-			generateWikiItem("location", it.getLocation()) +
-			generateWikiItem("peoplelist", it.getPeoplelist()) +
-			generateWikiItem("paperlist", it.getPaperlist()) +
-			generateWikiItem("homepage", it.getHomepage());			
+		String res = "You are viewing term:" + getID() + "<br>";
+		try{
+		Document document = DocumentHelper.parseText(wikixml);
+		Element rootElm = document.getRootElement();
+		res +=
+			generateWikiItem("keyword", rootElm.element("anchor").getText()) +
+			generateWikiItem("definition", rootElm.element("def").getText()) +
+//			generateWikiItem("conferences", "test conferences") +
+			generateListStarter("papers");
+		String paperlist = rootElm.element("paperlist").getText();
+		String paper[] = paperlist.split("[\"+\"]");
+		for(int i=0;i<paper.length;i++)
+		{
+			if (paper[i].length() != 0)
+				res += generatePaperContent(paper[i]);
+		}
+		res += generateListEnd() +
+			generateListStarter("people");
+		String peoplelist = rootElm.element("peoplelist").getText();
+		String people[] = peoplelist.split("\\+");
+		for(int i=0;i<people.length;i++)
+		{
+			System.out.println(people[i]);
+			res += generateListContent(people[i]);
+		}
+		res += generateListEnd();
+		res += generateWikiItem("dataset", rootElm.element("dataset").getText());
+		} catch (Exception e) {
+			res = e.toString();
+			e.printStackTrace();
+		}
+		return res;
+	}
+	public String getPeoplePage()
+	{
+		String res = "You are viewing people:" + getID() + "<br>";
+		try{
+		Document document = DocumentHelper.parseText(wikixml);
+		Element rootElm = document.getRootElement();
+		res +=
+			generateWikiItem("name", rootElm.element("PeopleName").getText()) +
+			generateWikiItem("affliation", rootElm.element("Affiliation").getText()) +
+			generateWikiItem("address", rootElm.element("Address").getText()) +
+			generateWikiMail("email", rootElm.element("Email").getText()) +
+			generateWikiLink("home-page", rootElm.element("Homepage").getText());
+		res += generateListStarter("papers");
+		
+		String paperlist = rootElm.element("PaperList").getText();
+		String paper[] = paperlist.split("[\"+\"]");
+		for(int i=0;i<paper.length;i++)
+		{
+			if (paper[i].length() != 0)
+				res += generatePaperContent(paper[i]);
+		}
+		res += generateListEnd() +
+			generateListStarter("LinkPeople");
+		String peoplelist = rootElm.element("LinkList").getText();
+		String people[] = peoplelist.split("\\+");
+		for(int i=0;i<people.length;i++)
+		{
+			System.out.println(people[i]);
+			res += generateListContent(people[i]);
+		}
+		res += generateListEnd();
+
+		} catch (Exception e) {
+			res = e.toString();
+			e.printStackTrace();
+		}
+		return res;
+	}
+	public String getInstitutionPage()
+	{
+		String res = "You are viewing Conference:" + getID() + "<br>";
+		try{
+		Document document = DocumentHelper.parseText(wikixml);
+		Element rootElm = document.getRootElement();
+		res +=
+			generateWikiItem("keyword", rootElm.element("anchor").getText()) +
+			generateWikiItem("location", rootElm.element("Location").getText());
+		res += generateListStarter("papers");
+		String paperlist = rootElm.element("paperlist").getText();
+		String paper[] = paperlist.split("[\"+\"]");
+		for(int i=0;i<paper.length;i++)
+		{
+			if (paper[i].length() != 0)
+				res += generatePaperContent(paper[i]);
+		}
+		res += generateListEnd() +
+			generateListStarter("people");
+		String peoplelist = rootElm.element("peoplelist").getText();
+		String people[] = peoplelist.split("\\+");
+		for(int i=0;i<people.length;i++)
+		{
+			System.out.println(people[i]);
+			res += generateListContent(people[i]);
+		}
+		res += generateListEnd();
+		res += generateWikiLink("home-page", rootElm.element("HomePage").getText());
+
+		} catch (Exception e) {
+			res = e.toString();
+			e.printStackTrace();
+		}
+
+		return res;
+		
+	
 	}
 
 

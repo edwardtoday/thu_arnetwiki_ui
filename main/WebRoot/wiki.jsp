@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=gb2312" language="java" errorPage="" %>
-<%@ page import="org.net9.arnetwiki.ui.wiki.WikiPageTest "%>
+<%@ page import="org.net9.arnetwiki.ui.wiki.WikiPage "%>
 <%@page import="org.net9.arnetwiki.ui.um.UserWebController"%>
 <html>
 <head>
@@ -55,7 +55,7 @@
 					else
 					{
 						type = Integer.parseInt(style);
-						WikiPageTest tester = new WikiPageTest(request);
+						WikiPage tester = new WikiPage(request);
 						out.println(tester.showPage());
 					}
 				%>

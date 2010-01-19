@@ -2,22 +2,22 @@ package org.net9.arnetwiki.ui.wiki;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import java.util.List;
 import java.util.ArrayList;
 
 import java.io.*;
 import java.util.*;
 import java.net.*;
-import org.w3c.dom.*;
-import org.apache.soap.util.xml.*;
-import org.apache.soap.*;
-import org.apache.soap.encoding.*;
-import org.apache.soap.encoding.soapenc.*;
-import org.apache.soap.rpc.*;
-import org.apache.soap.transport.http.SOAPHTTPConnection;
 
-import edu.thu.soa2009.wiki.*;
+import org.codehaus.xfire.client.Client;   
+import org.apache.ws.commons.schema.resolver.*;
+
+import org.wikigroup.WikiService.WikiServiceLocator;
+import org.wikigroup.WikiService.WikiServicePortType;
+
+import org.dom4j.*;
+import org.dom4j.io.*; 
+
 
 
 /*
@@ -27,14 +27,10 @@ import edu.thu.soa2009.wiki.*;
 
 public class WikiEdit{
 	private HttpServletRequest request;
-	private String endpoint = "http://127.0.0.1:8088/mockwikiHttpBinding";
+	private String wikixml;
 	
 	public WikiEdit (HttpServletRequest request) {
 		this.request = request;
-	}
-	public String test()
-	{
-		return "Test Success";
 	}
 	public String getID()
 	{
@@ -46,66 +42,22 @@ public class WikiEdit{
 	}
 	public String getEditPage()
 	{
-		WikiPage res;
-	try {
-    		URL url = new URL (endpoint);
-		SOAPMappingRegistry smr = new SOAPMappingRegistry ();
-		StringDeserializer sd = new StringDeserializer ();
-		smr.mapTypes (Constants.NS_URI_SOAP_ENC, new QName ("", "wiki_click"), null, null, sd);
-        // 创建传输路径和参数
-		SOAPHTTPConnection st = new SOAPHTTPConnection();
-        // 创建调用
-		Call call = new Call ();
-		call.setSOAPTransport(st);
-		call.setSOAPMappingRegistry (smr);
-
-		call.setTargetObjectURI (endpoint);
-		call.setMethodName("wiki_click");
-		call.setEncodingStyleURI ("http://schemas.xmlsoap.org/soap/encoding/");
-
-		Vector params = new Vector();
-		params.addElement(new Parameter("wiki_ID", String.class, getID(), null));
-		params.addElement(new Parameter("wiki_versionNo", String.class, "1", null));
-		call.setParams(params);
-		Response resp = null;
 		try {
-			resp = call.invoke (url, "wiki_click");
+			WikiServicePortType service = new WikiServiceLocator()
+					.getWikiServiceHttpPort();
+			wikixml = service.getWikiPage(getID());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		catch (SOAPException e) {
-			System.err.println("Caught SOAPException (" + e.getFaultCode () + "): " + e.getMessage ());
-			return null;
+		switch(getType())
+		{
+			case 1:		//term
+				return editTermPage();
+			case 2:		//people
+				return editPeoplePage();
+			default:	//institution//"Conf"
+				return editInstitutionPage();
 		}
-        // 检查返回值
-		if (resp != null && !resp.generatedFault()) {
-			Parameter ret = resp.getReturnValue();
-			Object value = ret.getValue();
-			System.out.println ("Answer--> " + value);
-
-			edu.thu.soa2009.wiki.WikiPage wp = (edu.thu.soa2009.wiki.WikiPage)value;
-			switch(getType())
-			{
-				case 1:		//term
-					return editTermPage(wp);
-				case 2:		//people
-					return editPeoplePage(wp);
-				default:	//institution
-					return editInstitutionPage(wp);
-			}
-		} else {
-			Fault fault = resp.getFault ();
-			System.err.println ("Generated fault: ");
-			System.out.println (" Fault Code = " + fault.getFaultCode());
-			System.out.println (" Fault String = " + fault.getFaultString());
-			return null;
-		}
-
-	}
-	catch (Exception e) 
-	{
-		System.err.println(e.toString());
-		e.printStackTrace();
-	}
-		return null;
 	}
 	private String generateWikiEditItem(String header, String content){
 		return
@@ -121,42 +73,61 @@ public class WikiEdit{
 				"</div>" +
 			"</div>";
 	}
-	public String editTermPage(edu.thu.soa2009.wiki.WikiPage wp)
+	public String editTermPage()
 	{
-		TermPage tp = wp.getTerm();
-		PeopleType people = tp.getPeople();
-		InstiType it = tp.getInsitutions();
-
-		return 	generateWikiEditItem("keyword", "test keyword") +
-			generateWikiEditItem("definition", tp.getDef()) +
-			generateWikiEditItem("conferences", "test conferences") +
-			generateWikiEditItem("papers", tp.getPapers()) +
-			generateWikiEditItem("people", people.getName()) +
-			generateWikiEditItem("institutions", it.getLocation()) +
-			generateWikiEditItem("dataset", tp.getDataset());
+		String res = "";
+		try{
+		Document document = DocumentHelper.parseText(wikixml);
+		Element rootElm = document.getRootElement();
+		res +=
+			generateWikiEditItem("keyword", rootElm.element("anchor").getText()) +
+			generateWikiEditItem("definition", rootElm.element("def").getText()) +
+			generateWikiEditItem("papers", rootElm.element("paperlist").getText()) +
+			generateWikiEditItem("peoples", rootElm.element("peoplelist").getText()) +
+			generateWikiEditItem("dataset", rootElm.element("dataset").getText());
+		} catch (Exception e) {
+			res = e.toString();
+			e.printStackTrace();
+		}
+		return res;
 	}
-	public String editPeoplePage(edu.thu.soa2009.wiki.WikiPage wp)
+	public String editPeoplePage()
 	{
-		PeopleType pt = wp.getPeople().getPeopleList();
-
-		return 	generateWikiEditItem("keyword", "test keyword") +
-			generateWikiEditItem("name", pt.getName()) +
-			generateWikiEditItem("position", pt.getPosition()) +
-			generateWikiEditItem("affliation", "test affliation") +
-			generateWikiEditItem("address", pt.getAddress()) +
-			generateWikiEditItem("email", pt.getEmail()) +
-			generateWikiEditItem("home-page", pt.getHomePage()) +
-			generateWikiEditItem("paperlist", pt.getPaperlist());
+		String res = "";
+		try{
+		Document document = DocumentHelper.parseText(wikixml);
+		Element rootElm = document.getRootElement();
+		res +=
+			generateWikiEditItem("name", rootElm.element("PeopleName").getText()) +
+			generateWikiEditItem("affliation", rootElm.element("Affiliation").getText()) +
+			generateWikiEditItem("address", rootElm.element("Address").getText()) +
+			generateWikiEditItem("email", rootElm.element("Email").getText()) +
+			generateWikiEditItem("home-page", rootElm.element("Homepage").getText()) +
+			generateWikiEditItem("papers", rootElm.element("paperlist").getText()) +
+			generateWikiEditItem("LinkPeople", rootElm.element("LinkList").getText());
+		} catch (Exception e) {
+			res = e.toString();
+			e.printStackTrace();
+		}
+		return res;
 	}
-	public String editInstitutionPage(edu.thu.soa2009.wiki.WikiPage wp)
+	public String editInstitutionPage()
 	{
-		InstiType it = wp.getInsti().getInstiList();
-
-		return 	generateWikiEditItem("keyword", "test keyword") +
-			generateWikiEditItem("location", it.getLocation()) +
-			generateWikiEditItem("peoplelist", it.getPeoplelist()) +
-			generateWikiEditItem("paperlist", it.getPaperlist()) +
-			generateWikiEditItem("homepage", it.getHomepage());	
+		String res = "";
+		try{
+		Document document = DocumentHelper.parseText(wikixml);
+		Element rootElm = document.getRootElement();
+		res +=
+			generateWikiEditItem("keyword", rootElm.element("anchor").getText()) +
+			generateWikiEditItem("location", rootElm.element("Location").getText()) +
+			generateWikiEditItem("papers", rootElm.element("paperlist").getText()) +
+			generateWikiEditItem("people", rootElm.element("peoplelist").getText()) +
+			generateWikiEditItem("home-page", rootElm.element("Homepage").getText());
+		} catch (Exception e) {
+			res = e.toString();
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 

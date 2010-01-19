@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=gb2312" language="java" import="java.sql.*" errorPage="" %>
-<%@ page import="org.net9.arnetwiki.ui.wiki.WikiEditTest "%>
+<%@ page import="org.net9.arnetwiki.ui.wiki.WikiEdit"%>
 <%@page import="org.net9.arnetwiki.ui.um.UserWebController"%>
 <html>
 <head>
@@ -53,7 +53,7 @@
 						out.print("NULL ID or style<br>");
 					}else{
 						type = Integer.parseInt(style);
-						WikiEditTest tester = new WikiEditTest(request);
+						WikiEdit tester = new WikiEdit(request);
 						%>
 							<form id="edit-wiki-form" method="post" action="wiki-save.jsp?wiki-id=<%= id %>&style=<%= style %>" name="saveform">
 							<!--  wiki的id和type不允许用户编辑 	-->  

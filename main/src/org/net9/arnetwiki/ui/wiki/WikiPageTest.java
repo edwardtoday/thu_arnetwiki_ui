@@ -61,11 +61,11 @@ public class WikiPageTest {
 				"<div class='itemContent'>";
 	}
 	private String generateListContent(String content){
-		return			"<a href='result-list.jsp?querytext=" + content + "'>" +
+		return			"<a rel='external' href='result-list.jsp?querytext=" + content + "'>" +
 					content + "</a><br>";
 	}
 	private String generatePaperContent(String content){
-		return			"<a href='pdf-comment.jsp?papername=" + content + "'>" +
+		return			"<a rel='external' href='pdf-comment.jsp?papername=" + content + "'>" +
 					content + "</a><br>";
 	}
 	private String generateListEnd(){

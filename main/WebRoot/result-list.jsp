@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=gb2312" language="java" import="java.sql.*" errorPage="" %>
-<%@ page import="org.net9.arnetwiki.ui.wiki.WikiQueryTest"%>
+<%@ page import="org.net9.arnetwiki.ui.wiki.WikiQuery"%>
 <%@page import="org.net9.arnetwiki.ui.um.UserWebController"%>
 <html>
 <head>
@@ -14,6 +14,8 @@
   <body>
   	<div id="outerframe">
 	    <div id="mainframe">
+		<div id = "wiki-id">
+		</div>
 	    	<div id="topbar">
 	    	<%	
 	    		UserWebController controller = new UserWebController(request);
@@ -44,8 +46,7 @@
 					out.print("NULL querytext");
 				else
 				{
-					out.print("querytext:"+querytext+"<br>");
-					WikiQueryTest tester = new WikiQueryTest(request);
+					WikiQuery tester = new WikiQuery(request);
 					out.println(tester.show());
 				}
 			%>

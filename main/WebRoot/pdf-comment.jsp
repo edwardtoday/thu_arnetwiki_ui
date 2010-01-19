@@ -26,6 +26,8 @@
 	    		Welcome,<%=username%><a href="index.jsp">Home</a>|<a href="favorite.jsp">Favorite</a>|<a href="group.jsp">Group</a>|<a href="setting.jsp">Setting</a>|<a href="logout.jsp">Sign Out</a>
 	    		<%} %>
 	    	</div>
+		<div id="wiki-id">
+		</div>
 	    	<div id="mainlogo" >
 	    		<a href="index.jsp"><img width="135" height="135" alt="logo" src="logo2.png"/></a>
 			</div>
@@ -33,11 +35,11 @@
 			<%String papername = request.getParameter("papername"); %>
 			papername:<%=papername%><br>
 			<div id="pdf-area">
-				<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="600" height="800" align="middle">
+				<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="800" height="600" align="middle">
 					<param name="allowScriptAccess" value="sameDomain">
-					<param name="movie" value="comment.swf"> 
-					<param name="FlashVars" value="papername=<%=papername%>">
-					<embed src="comment.swf" Flashvars="<%=papername%>" width=600  height=800>
+					<param name="movie" value="http://166.111.134.235:8081/pdf/PdfViewerApplication.swf?pdf=<%=papername%>&user=<%=username%>"> 
+					
+					<embed src="http://166.111.134.235:8081/pdf/PdfViewerApplication.swf?pdf=<%=papername%>&user=<%=username%>" width=800  height=600>
 				</object>
 			</div>
 		</div>
